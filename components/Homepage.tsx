@@ -1,19 +1,11 @@
-
 import * as React from "react";
 import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import SkipNextIcon from "@mui/icons-material/SkipNext";
+
 import { Button, Container, Slider, Stack } from "@mui/material";
 import { Header } from "common/Header";
 //import { Router, useNavigate } from "react-router-dom";
-import Spotify from "react-spotify-embed";
+
 
 import { useRouter } from 'next/router';
 
@@ -22,12 +14,11 @@ export default function Homepage() {
   const theme = useTheme();
   //const navigate = useNavigate();
   const router = useRouter()
-  const gotoStake = (place) => {
-   // localStorage.setItem("place", place);
-    //navigate("/stake");
+  const gotoStake = (place: string) => {
+    localStorage.setItem("place", place);
   };
 
-  return (
+  return (<>
     <Container maxWidth="xl" sx={{ minHeight: "calc(100vh - 263px)" }}>
     <Header/>
       <Box sx={{ 
@@ -74,7 +65,12 @@ export default function Homepage() {
             }}>
               <Button
                 className="freefont"
-                onClick={() => router.push("/72snEhn3vXMGf9VFS3sNBa2KEhjfjtzGdHo9TRKZRVuF?cluster=devnet")}
+                onClick={() => {
+                  gotoStake("north");
+                  router.push(process.env.NEXT_PUBLIC_NORTH) ;
+                }
+                  
+                }
                 sx={{
                 fontFamily: "myFont",
                   textTransform: "none",
@@ -91,7 +87,11 @@ export default function Homepage() {
               </Button>
               <Button
                 className="freefont"
-                onClick={() => gotoStake("east")}
+                onClick={() => { 
+                  gotoStake("east");
+                  router.push(process.env.NEXT_PUBLIC_EAST) ;               
+                  }
+                }
                 sx={{
                 fontFamily: "myFont",
                   textTransform: "none",
@@ -108,9 +108,12 @@ export default function Homepage() {
               </Button>
               <Button
                 className="freefont"
-                onClick={() => gotoStake("west")}
+                onClick={() => {
+                  gotoStake("west");
+                  router.push(process.env.NEXT_PUBLIC_WEST) ;   
+                }}
                 sx={{
-                fontFamily: "myFont",
+                  fontFamily: "myFont",
                   textTransform: "none",
                   fontSize: "48px",
                   color: "black",
@@ -125,7 +128,11 @@ export default function Homepage() {
               </Button>
               <Button
                 className="freefont"
-                onClick={() => gotoStake("south")}
+                onClick={() => { 
+                  gotoStake("south");
+                  router.push(process.env.NEXT_PUBLIC_SOUTH) ;               
+                  }
+                }
                 sx={{
                 fontFamily: "myFont",
                   textTransform: "none",
@@ -169,7 +176,6 @@ export default function Homepage() {
               >
                 01 - Proem & Down the Rabbit-hole
               </Typography>
-
               <Typography
                 sx={{ color: "black", fontWeight: "400", fontSize: "11px" }}
               >
@@ -178,8 +184,7 @@ export default function Homepage() {
               {/*}
               <Spotify link="https://open.spotify.com/track/5ihDGnhQgMA0F0tk9fNLlA?si=4472348a63dd4f83" />
             </Box>
-
             */}
     </Container>
-  );
+  </>);
 }

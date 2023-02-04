@@ -32,6 +32,10 @@ import {
   Typography,
 } from "@mui/material";
 import { HeroStats } from "@/components/hero-stats/HeroStats";
+import  North  from "@/components/pools/north";
+import  East  from "@/components/pools/east";
+import West from "@/components/pools/west";
+import South from "@/components/pools/south";
 
 
 type PANE_OPTIONS = 'dashboard' | 'leaderboard'
@@ -58,7 +62,7 @@ export default function StakePage(props: {stakePoolMetadataName: string | null})
 
 
 
-    const router = useRouter()
+  const router = useRouter()
   const { isFetched: stakePoolLoaded } = useStakePoolData()
   const userRegion = useUserRegion()
   const rewardDistributorData = useRewardDistributorData()
@@ -79,8 +83,8 @@ export default function StakePage(props: {stakePoolMetadataName: string | null})
   };
 
   const getPlace = () => {
-    //let place = localStorage.getItem("place");
-    setPlace('place');
+    let place = localStorage.getItem("place");
+    setPlace(place);
   };
 
   useEffect(() => {
@@ -108,129 +112,10 @@ export default function StakePage(props: {stakePoolMetadataName: string | null})
           gap: "20px",
         }}
       >
-        {place === "east" ? (
-          <Box
-            sx={{
-              flex: "1",
-              bgcolor: "#179151BD",
-              borderRadius: "7.5px",
-              padding: "22px",
-            }}
-          >
-            <img src={'assets/place/east.png'} style={{ width: "100%" }} />
-            <Typography sx={{ fontSize: "35px", fontWeight: "700" }}>
-              East
-            </Typography>
-              <Box sx={{ fontSize: "17px", fontWeight: "700" }}>
-                None - 5 $YRD-XP per day
-              </Box>
-              <Box sx={{ fontSize: "17px", fontWeight: "700" }}>
-                5 Month Lock - 7.5 $YRD-XP + 125 $LUV per day
-              </Box>
-              <Box sx={{ fontSize: "17px", fontWeight: "700" }}>
-                10 Month Lock - 10 $YRD-XP + 375 $LUV per day
-              </Box>
-            </Box>
-        ) : place === "west" ? (
-          <Box
-            sx={{
-              flex: "1",
-              bgcolor: "#179151BD",
-              borderRadius: "7.5px",
-              padding: "22px",
-            }}
-          >
-            <img src={'/assets/place/west.png'} style={{ width: "100%" }} />
-            <Typography sx={{ fontSize: "35px", fontWeight: "700" }}>
-              West
-            </Typography>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-              <Box sx={{ fontSize: "12px", fontWeight: "700" }}>
-                Staked At West Out Of Total: -
-              </Box>
-              <Box></Box>
-              <Box sx={{ fontSize: "12px", fontWeight: "700" }}>
-                Faction Votes: -
-              </Box>
-              <Box sx={{ fontSize: "17px", fontWeight: "700" }}>
-                Time Lock Period
-              </Box>
-              <Box sx={{ fontSize: "17px", fontWeight: "700" }}>
-                None - 5 $YRD-XP per day
-              </Box>
-              <Box sx={{ fontSize: "17px", fontWeight: "700" }}>
-                5 Month Lock - 7.5 $YRD-XP + 125 $LUV per day
-              </Box>
-              <Box sx={{ fontSize: "17px", fontWeight: "700" }}>
-                10 Month Lock - 10 $YRD-XP + 375 $LUV per day
-              </Box>
-            </Box>
-          </Box>
-        ) : place === "south" ? (
-          <Box
-            sx={{
-              flex: "1",
-              bgcolor: "#179151BD",
-              borderRadius: "7.5px",
-              padding: "22px",
-            }}
-          >
-            <img src={'/assets/place/south.png'} style={{ width: "100%" }} />
-            <Typography sx={{ fontSize: "35px", fontWeight: "700" }}>
-              South
-            </Typography>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-              <Box sx={{ fontSize: "12px", fontWeight: "700" }}>
-                Staked At South Out Of Total: 100%
-              </Box>
-              <Box></Box>
-              <Box sx={{ fontSize: "12px", fontWeight: "700" }}>
-                Faction Votes: 1
-              </Box>
-              <Box sx={{ fontSize: "17px", fontWeight: "700" }}>
-                Time Lock Period
-              </Box>
-              <Box sx={{ fontSize: "17px", fontWeight: "700" }}>
-                None - 5 $YRD-XP per day
-              </Box>
-              <Box sx={{ fontSize: "17px", fontWeight: "700" }}>
-                5 Month Lock - 7.5 $YRD-XP + 125 $LUV per day
-              </Box>
-              <Box sx={{ fontSize: "17px", fontWeight: "700" }}>
-                10 Month Lock - 10 $YRD-XP + 375 $LUV per day
-              </Box>
-            </Box>
-          </Box>
-        ) : (
-          <Box
-            sx={{
-              flex: "1",
-              bgcolor: "#179151BD",
-              borderRadius: "7.5px",
-              padding: "22px",
-              maxWidth:"400px",
-            }}
-          >
-            <img src={'/assets/place/north.png'} style={{ width: "100%" }} />
-            <Typography sx={{ fontSize: "35px", fontWeight: "700" }}>
-              North
-            </Typography>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-              <Box sx={{ fontSize: "12px", fontWeight: "700" }}>
-                Rewards:
-              </Box>
-              <Box sx={{ fontSize: "17px", fontWeight: "700" }}>
-                None - 5 $YRD-XP per day
-              </Box>
-              <Box sx={{ fontSize: "17px", fontWeight: "700" }}>
-                5 Month Lock - 7.5 $YRD-XP + 125 $LUV per day
-              </Box>
-              <Box sx={{ fontSize: "17px", fontWeight: "700" }}>
-                10 Month Lock - 10 $YRD-XP + 375 $LUV per day
-              </Box>
-            </Box>
-          </Box>
-        )}
+        {place === "north" && <North/>}
+        {place === "east" && <East/>}
+        {place === "south" && <South/>}
+        {place === "west" && <West/>}
         <Box
           sx={{
             flex: "2",
