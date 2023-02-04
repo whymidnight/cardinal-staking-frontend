@@ -69,8 +69,8 @@ export function Header() {
   };
 
   return (
-    <AppBar position="fixed" sx={{ bgcolor: "white" }}>
-      <Container maxWidth="xl">
+    <AppBar position="fixed" sx={{ bgcolor: "rgba(0, 0, 0, 0.6)", boxShadow:"none" }}>
+      <Container maxWidth="2440px">
         <Toolbar disableGutters>
           <Box
             sx={{
@@ -79,7 +79,7 @@ export function Header() {
               fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".3rem",
-              color: "inherit",
+              color: "white",
               textDecoration: "none",
               cursor: "pointer",
             }}
@@ -147,7 +147,7 @@ export function Header() {
               onClick={handleCloseNavMenu}
               sx={{
                 my: 2,
-                color: "#000000",
+                color: "white",
                 display: "flex",
                 textTransform: "none",
                 alignItems: "center",
@@ -166,7 +166,7 @@ export function Header() {
               onClick={handleCloseNavMenu}
               sx={{
                 my: 2,
-                color: "#000000",
+                color: "white",
                 display: "flex",
                 textTransform: "none",
                 alignItems: "center",
@@ -176,7 +176,7 @@ export function Header() {
               }}
             >
               <img src={'assets/twitter logo.png'} style={{ height: "40px" }} />
-              Twitter
+          
             </Link>
             <Link
               target="_blank"
@@ -185,7 +185,7 @@ export function Header() {
               onClick={handleCloseNavMenu}
               sx={{
                 my: 2,
-                color: "#000000",
+                color: "white",
                 display: "flex",
                 textTransform: "none",
                 alignItems: "center",
@@ -195,27 +195,9 @@ export function Header() {
               }}
             >
               <img src={'/assets/discord.png'} style={{ height: "40px" }} />
-              Discord
+          
             </Link>
-            <Link
-              target="_blank"
-              href="https://catsyard.io/"
-              underline="none"
-              onClick={handleCloseNavMenu}
-              sx={{
-                my: 2,
-                color: "#000000",
-                display: "flex",
-                textTransform: "none",
-                alignItems: "center",
-                gap: "8px",
-                fontSize: "16px",
-                fontWeight: "700",
-              }}
-            >
-              <img src={'/assets/website.png'} style={{ height: "40px" }} />
-              Website
-            </Link>
+
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>

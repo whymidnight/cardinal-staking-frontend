@@ -62,7 +62,7 @@ const App = ({
       case 'testnet':
         return WalletAdapterNetwork.Testnet
       default:
-        return WalletAdapterNetwork.Mainnet
+        return WalletAdapterNetwork.Devnet
     }
   }, [cluster])
 
@@ -83,7 +83,7 @@ const App = ({
     [network]
   )
   return (
-    <EnvironmentProvider defaultCluster={cluster}>
+    <EnvironmentProvider defaultCluster={WalletAdapterNetwork.Devnet}>
       <StakePoolMetadataProvider poolMapping={poolMapping}>
         <UTCNowProvider>
           <WalletProvider autoConnect wallets={wallets}>
