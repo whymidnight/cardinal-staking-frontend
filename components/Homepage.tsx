@@ -2,7 +2,7 @@ import * as React from "react";
 import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 
-import { Button, Container, Slider, Stack, Grid } from "@mui/material";
+import { Button, Container, Slider, Stack, Grid, LinearProgress } from "@mui/material";
 
 import { Header } from "common/Header";
 //import { Router, useNavigate } from "react-router-dom";
@@ -34,12 +34,12 @@ const NorthButton = () => {
                   fontWeight: "700",
                   display:"flex",
                   flexDirection:"column",
-                  padding:"20px"
+                  pb:"60px",
                 }}
               >
                 
                 <img src={'/assets/north.png'} />
-                North
+              
               </Button>
   )
 }
@@ -65,12 +65,12 @@ const EastButton = () => {
                   fontWeight: "700",
                   display:"flex",
                   flexDirection:"column",
-                  padding:"20px"
+              
                 }}
               >
                 
                 <img src={'/assets/east.png'} />
-                East
+           
               </Button>
   )
 }
@@ -95,12 +95,12 @@ const WestButton = () => {
                   fontWeight: "700",
                   display:"flex",
                   flexDirection:"column",
-                  padding:"20px"
+                
                 }}
               >
               
                 <img src={'/assets/west.png'} />
-                West
+        
               </Button>
   )
 }
@@ -124,13 +124,14 @@ const SouthButton = () => {
       fontSize: "18px",
       color: "black",
       fontWeight: "700",
-      display:"block"
+      display:"block",
+      pt:"60px",
 
     }}
   >
    
     <img src={'/assets/south.png'} />
-    <div>South</div>
+  
   </Button>
   )
 }
@@ -146,17 +147,20 @@ export default function Homepage() {
   return (<>
     <Container maxWidth="2440px" sx={{ 
       minHeight: "calc(100vh)", 
+     
       backgroundImage:"url('/assets/bg.jpg')",
       backgroundSize:"cover",
       backgroundPosition:"fixed",
       backgroundRepeat:"no-repeat",
+     
+     
       }}
       
       >
     <Header/>
       <Box sx={{
 
-        pt: "10vh", 
+        pt: "18vh", 
         display: { xs: "flex", md: "grid" },
         flexDirection: "column",
         justifyContent:"center",
@@ -176,7 +180,7 @@ export default function Homepage() {
             display: "flex", 
             flexDirection:"column", 
             alignItems:"center",
-            fontSize:"35px"
+            fontSize:"45px"
           
             }}>
        
@@ -230,9 +234,9 @@ export default function Homepage() {
 
             <EastButton/>
             </Grid>
-            <Grid item xs={4} sx={{display:"flex",alignItems:"center", justifyContent:"center"}}>
+            <Grid item xs={4} sx={{display:"flex",alignItems:"center", justifyContent:"center"}} >
 
-            <div style={{width:""}}></div>
+            <img src={'/assets/arrow.png'} style={{}} />
             </Grid>
             <Grid item xs={4} sx={{display:"flex",alignItems:"center", justifyContent:"center"}}>
 
@@ -258,9 +262,13 @@ export default function Homepage() {
                   color: "#000000",
                   fontWeight: "700",
                   fontSize: "1.3em",
+                  padding:"20px",
                 }}
               >
-                Cats Staked: 0/3333
+                Cats Staked: 1616/3333
+                <Box sx={{ width: '100%' }}>
+      <LinearProgress variant="determinate" value={50} />
+    </Box>
               </Box>
              
             </Box>

@@ -94,14 +94,18 @@ export default function StakePage(props: {stakePoolMetadataName: string | null})
   return (<>
 <Header/>
     <Container
-      maxWidth="xl"
+      maxWidth="2440px"
       sx={{
-        mt: "13vh",
+        pt:"15vh",
         mb: "50px",
-        minHeight: "calc(100vh - 248px)",
+        minHeight: "calc(100vh)",
         display: "flex",
         flexDirection:"column",
         alignItems: "center",
+        backgroundImage:"url('/assets/bg.jpg')",
+        backgroundSize:"cover",
+        backgroundPosition:"fixed",
+        backgroundRepeat:"no-repeat",
       }}
     >
       <Box
@@ -119,7 +123,8 @@ export default function StakePage(props: {stakePoolMetadataName: string | null})
         <Box
           sx={{
             flex: "2",
-            border: "4px solid #53AC7B",
+            border: "solid black 5px",
+            bgcolor:"rgba(0,0,0,0.8)",
             borderRadius: "10px",
             padding: "15px",
             display: "flex",

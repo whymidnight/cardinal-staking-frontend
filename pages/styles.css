@@ -25,6 +25,7 @@ body {
     Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
     'Segoe UI Symbol';
   background-color: #fff;
+
   color: #000;
   margin: 0;
 }
@@ -34,6 +35,7 @@ body {
 }
 .App {
   text-align: center;
+  backgroundImage:url('/assets/bg.jpg');
 }
 
 .App-logo {
