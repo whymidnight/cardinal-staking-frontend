@@ -8,10 +8,11 @@ return(
 <Box
 sx={{
   flex: "1",
-  bgcolor: "#179151BD",
+  bgcolor: "rgba(0,255,0,0.5)",
   borderRadius: "7.5px",
   padding: "22px",
   maxWidth:"400px",
+  height:"fit-content"
 }}
 >
 <img src={'/assets/place/north.png'} style={{ width: "100%" }} />

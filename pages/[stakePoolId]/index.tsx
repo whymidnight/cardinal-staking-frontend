@@ -97,8 +97,8 @@ export default function StakePage(props: {stakePoolMetadataName: string | null})
       maxWidth="2440px"
       sx={{
         pt:"15vh",
-        mb: "50px",
-        minHeight: "calc(100vh)",
+       
+        minHeight: "calc(100vh-600px)",
         display: "flex",
         flexDirection:"column",
         alignItems: "center",
@@ -106,6 +106,7 @@ export default function StakePage(props: {stakePoolMetadataName: string | null})
         backgroundSize:"cover",
         backgroundPosition:"fixed",
         backgroundRepeat:"no-repeat",
+        
       }}
     >
       <Box
@@ -114,6 +115,7 @@ export default function StakePage(props: {stakePoolMetadataName: string | null})
           flexDirection: {xs:"column", sm:"row"},
           width: "100%",
           gap: "20px",
+          pb:"15vh",
         }}
       >
         {place === "north" && <North/>}
@@ -130,6 +132,7 @@ export default function StakePage(props: {stakePoolMetadataName: string | null})
             display: "flex",
             flexDirection: "column",
             gap: "20px",
+            
           }}
         >
               <div className="flex flex-col gap-4">
@@ -141,7 +144,7 @@ export default function StakePage(props: {stakePoolMetadataName: string | null})
                   )}
     <HeroStats/>
                 <StakePoolNotice />
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
                   <UnstakedTokens />
                   <StakedTokens />
                 </div>

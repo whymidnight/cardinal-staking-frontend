@@ -27,7 +27,7 @@ import {
 import { setVisible } from "@solana/wallet-adapter-react-ui";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { Link } from "@mui/material";
-
+import { useRouter } from "next/router";
 const pages = ["Yardpaper", "Twitter", "Discord", "Website"];
 const settings = ["Disconnect"];
 
@@ -35,6 +35,7 @@ export function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   //const navigate = useNavigate();
+  const router = useRouter()
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -52,7 +53,7 @@ export function Header() {
   };
 
   const Home = () => {
-    //navigate("/");
+    router.push("/");
   };
 
   const { setVisible } = useWalletModal();
@@ -67,7 +68,7 @@ export function Header() {
     disconnect();
     handleCloseUserMenu();
   };
-
+  
   return (
     <AppBar position="fixed" sx={{ bgcolor: "rgba(0, 0, 0, 0.6)", boxShadow:"none" }}>
       <Container maxWidth="2440px">
@@ -83,9 +84,11 @@ export function Header() {
               textDecoration: "none",
               cursor: "pointer",
             }}
-            onClick={Home}
+           
           >
-            <img src={'/assets/catsyard.io.png'} />
+               
+            <img src={'/assets/catsyard.io.png'} onClick={Home}/>
+         
           </Box>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -134,9 +137,14 @@ export function Header() {
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
+              
             }}
+           
+            
           >
-            <img src={'/assets/catsyard.io.png'} />
+         
+            <img src={'/assets/catsyard.io.png'} onClick={Home}/>
+         
           </Box>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}></Box>
           <Box sx={{ display: { xs: "none", md: "flex" }, gap: "20px" }}>

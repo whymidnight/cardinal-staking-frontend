@@ -37,6 +37,7 @@ export const StakedTokens = () => {
         border: stakePoolMetadata?.colors?.accent
           ? `2px solid ${stakePoolMetadata?.colors?.accent}`
           : '',
+        
       }}
     >
       <div className="mb-5 flex flex-row items-center justify-between">

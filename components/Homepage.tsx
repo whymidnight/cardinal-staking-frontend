@@ -9,6 +9,7 @@ import { Header } from "common/Header";
 import { pool_configuration } from "pages";
 import bg from "assets/Rec.png"
 import { useRouter } from 'next/router';
+import zIndex from "@mui/material/styles/zIndex";
 
 
 const NorthButton = () => {
@@ -34,7 +35,7 @@ const NorthButton = () => {
                   fontWeight: "700",
                   display:"flex",
                   flexDirection:"column",
-                  pb:"60px",
+                  pb:"0px",
                 }}
               >
                 
@@ -69,7 +70,7 @@ const EastButton = () => {
                 }}
               >
                 
-                <img src={'/assets/east.png'} />
+                <img src={'/assets/east.png'} style={{}}/>
            
               </Button>
   )
@@ -125,7 +126,7 @@ const SouthButton = () => {
       color: "black",
       fontWeight: "700",
       display:"block",
-      pt:"60px",
+      pt:"0px",
 
     }}
   >
@@ -146,7 +147,8 @@ export default function Homepage() {
 
   return (<>
     <Container maxWidth="2440px" sx={{ 
-      minHeight: "calc(100vh)", 
+      minHeight: "100vh", 
+      maxHeight: "calc(100vh)", 
      
       backgroundImage:"url('/assets/bg.jpg')",
       backgroundSize:"cover",
@@ -160,7 +162,7 @@ export default function Homepage() {
     <Header/>
       <Box sx={{
 
-        pt: "18vh", 
+        pt: "10vh", 
         display: { xs: "flex", md: "grid" },
         flexDirection: "column",
         justifyContent:"center",
@@ -180,7 +182,8 @@ export default function Homepage() {
             display: "flex", 
             flexDirection:"column", 
             alignItems:"center",
-            fontSize:"45px"
+            fontSize:"45px",
+            color:"white",
           
             }}>
        
@@ -192,6 +195,8 @@ export default function Homepage() {
           mt: "10px", 
           flexDirection:{xs: "column", md: "column"}, 
           justifyContent:"center",
+          alignItems:"center",
+ 
 
           }}>
             
@@ -209,7 +214,11 @@ export default function Homepage() {
             backgroundColor:"rgba(255,255,255,0.6)",
             padding:"20px",
             boxShadow:"0px 1px 1px 3px rgba(0,0,0,0.3)",
-            maxWidth:"900px",
+            backgroundImage:"url('/assets/whitebg.png')",
+            backgroundPosition:"center",
+            backgroundSize:"70%",
+            backgroundRepeat:"no-repeat",
+            maxWidth:"500px",
             borderRadius:"2em",
             width: {md:500},
             border: "none",
@@ -232,15 +241,15 @@ export default function Homepage() {
           
             <Grid item xs={4} sx={{display:"flex",alignItems:"center", justifyContent:"center"}}>
 
-            <EastButton/>
+            <WestButton/>
             </Grid>
             <Grid item xs={4} sx={{display:"flex",alignItems:"center", justifyContent:"center"}} >
 
-            <img src={'/assets/arrow.png'} style={{}} />
+            <img src={'/assets/arrow.png'} style={{width:"70%"}} />
             </Grid>
             <Grid item xs={4} sx={{display:"flex",alignItems:"center", justifyContent:"center"}}>
 
-            <WestButton/>
+            <EastButton/>
             </Grid>
             <Grid item xs={4} sx={{display:"flex",alignItems:"center", justifyContent:"center"}}>
 
@@ -257,17 +266,23 @@ export default function Homepage() {
             </Grid>
             <Box sx={{ display: "flex", justifyContent:"center" }}>
               <Box
+
                 sx={{
                   fontFamily:"arial",
                   color: "#000000",
                   fontWeight: "700",
                   fontSize: "1.3em",
-                  padding:"20px",
+                  bgcolor:"rgba(0,255,200,0.9)",
+                  padding:"40px",
+                  margin:"20px",
+                  borderRadius:"10px",
+                  zIndex:"5",
+                  boxShadow:"0px 1px 1px 2px rgba(0,30,0,0.1)",
                 }}
               >
                 Cats Staked: 1616/3333
                 <Box sx={{ width: '100%' }}>
-      <LinearProgress variant="determinate" value={50} />
+      <LinearProgress variant="determinate" value={50} color="success"/>
     </Box>
               </Box>
              
@@ -298,7 +313,7 @@ export default function Homepage() {
               <Spotify link="https://open.spotify.com/track/5ihDGnhQgMA0F0tk9fNLlA?si=4472348a63dd4f83" />
             </Box>
             */}
-              <img src={'/assets/cat.png'} style={{position:"absolute" ,top:"60%", zIndex:"1"}} />
+              <img src={'/assets/cat.png'} style={{position:"fixed" ,top:"55%", zIndex:"1", overflow:"hidden"}} />
     </Container>
   </>);
 }

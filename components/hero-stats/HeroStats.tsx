@@ -38,7 +38,7 @@ export const HeroStats: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
           <div className="h-6 w-10 animate-pulse rounded-md bg-border"></div>
         ) : (
           <div
-            className="text-center text-xl"
+            className="text-center text-xl text-light-1"
           >
             {totalStaked.data?.toLocaleString()}{' '}
             {stakePoolMetadata?.maxStaked
