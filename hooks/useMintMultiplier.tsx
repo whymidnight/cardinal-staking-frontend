@@ -60,18 +60,16 @@ export const useMintMultiplier = (mint: string) => {
         )
       } else {
         try {
-          stakeEntryId = (
-            await findStakeEntryIdFromMint(
-              connection,
-              walletId,
-              stakePoolId,
-              mintId
-            )
-          )[0]
+          stakeEntryId = await findStakeEntryIdFromMint(
+            connection,
+            walletId,
+            stakePoolId,
+            mintId
+          )
         } catch (e) {
           throw 'Invalid mint ID or no reward entry for mint'
         }
-        const [rewardEntryId] = await findRewardEntryId(
+        const rewardEntryId = findRewardEntryId(
           rewardDistributor.data.pubkey,
           stakeEntryId
         )
@@ -86,3 +84,4 @@ export const useMintMultiplier = (mint: string) => {
     { enabled: !!stakePoolId && mint.length > 0 }
   )
 }
+

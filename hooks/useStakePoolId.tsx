@@ -1,25 +1,15 @@
-import { tryPublicKey } from '@cardinal/namespaces-components'
 import { PublicKey } from '@solana/web3.js'
-import { stakePoolMetadatas } from 'api/mapping'
 import { useRouter } from 'next/router'
-import { useStakePoolMetadataCtx } from 'providers/StakePoolMetadataProvider'
 
 export const useStakePoolId = () => {
-  const {
-    query: { stakePoolId },
-  } = useRouter()
-  const { stakePoolMetadata } = useStakePoolMetadataCtx()
+  const router = useRouter()
+  // FIXME - verify `router.route` is actually a public key string
+  // or `/publickey` string.
+  // THIS NEEDS CORRECTNESS CHECK
 
-  if (stakePoolMetadata)
-    return new PublicKey(stakePoolMetadata.stakePoolAddress)
-  const nameMapping = stakePoolMetadatas.find((p) => p.name === stakePoolId)
-  const addressMapping = stakePoolMetadatas.find(
-    (p) => p.stakePoolAddress.toString() === stakePoolId
-  )
-  const publicKey =
-    nameMapping?.stakePoolAddress ||
-    addressMapping?.stakePoolAddress ||
-    tryPublicKey(stakePoolId)
+  let stakePoolId: PublicKey | string | undefined = router.route
 
-  return publicKey
+  if (!stakePoolId) stakePoolId = new PublicKey(stakePoolId)
+
+  return stakePoolId
 }

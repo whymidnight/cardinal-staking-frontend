@@ -1,4 +1,3 @@
-import { stake as stakeV2 } from '@cardinal/rewards-center'
 import { ReceiptType } from '@cardinal/staking/dist/cjs/programs/stakePool'
 import { getStakeEntries } from '@cardinal/staking/dist/cjs/programs/stakePool/accounts'
 import { findStakeEntryId } from '@cardinal/staking/dist/cjs/programs/stakePool/pda'
@@ -93,68 +92,11 @@ export const useHandleStake = (callback?: () => void) => {
       if (!isStakePoolV2(stakePoolData.parsed)) {
         const stakeInfos = stakeInfosFromTokenData(tokenDatas)
         const stakeEntryIds = await Promise.all(
-          stakeInfos.map(
-            async ({ mintId, fungible }) =>
-              (
-                await findStakeEntryId(
-                  wallet.publicKey,
-                  stakePoolId,
-                  mintId,
-                  fungible
-                )
-              )[0]
+          stakeInfos.map(async ({ mintId }) =>
+            findStakeEntryId(stakePoolId, mintId)
           )
         )
         let stakeEntries = await getStakeEntries(connection, stakeEntryIds)
-
-        ///////////// init stake mints /////////////
-        const initTxs: { tx: Transaction; signers: Signer[] }[] = []
-        if (receiptType === ReceiptType.Receipt) {
-          for (let i = 0; i < stakeInfos.length; i++) {
-            const { mintId } = stakeInfos[i]!
-            const transaction = new Transaction()
-            const stakeEntry = stakeEntries?.find(
-              (s) => s?.parsed?.originalMint.toString() === mintId.toString()
-            )
-            if (!stakeEntry) {
-              await withInitStakeEntry(transaction, connection, wallet, {
-                stakePoolId,
-                originalMintId: mintId,
-              })
-            }
-            let stakeMintKeypair: Keypair | undefined
-            if (!stakeEntry?.parsed.stakeMint) {
-              stakeMintKeypair = Keypair.generate()
-              await withInitStakeMint(transaction, connection, wallet, {
-                stakePoolId: stakePoolId,
-                stakeEntryId: stakeEntryIds[i]!,
-                originalMintId: mintId,
-                stakeMintKeypair,
-                name: `POOl${stakePoolData.parsed.identifier.toString()} RECEIPT`,
-                symbol: `POOl${stakePoolData.parsed.identifier.toString()}`,
-              })
-              if (transaction.instructions.length > 0) {
-                initTxs.push({ tx: transaction, signers: [stakeMintKeypair] })
-              }
-            }
-          }
-        }
-        if (initTxs.length > 0) {
-          await executeAllTransactions(
-            connection,
-            wallet,
-            initTxs.map(({ tx }) => tx),
-            {
-              signers: initTxs.map(({ signers }) => signers),
-              throwIndividualError: true,
-              notificationConfig: {
-                message: `Successfully initialized stake entries`,
-                description: 'Staking now in progress',
-              },
-            }
-          )
-          stakeEntries = await getStakeEntries(connection, stakeEntryIds)
-        }
 
         ///////////// stake v1 /////////////
         txs = await Promise.all(
@@ -169,11 +111,14 @@ export const useHandleStake = (callback?: () => void) => {
                 originalMintId: mintId,
               })
             }
+
             await withStake(transaction, connection, wallet, {
               stakePoolId: stakePoolId,
               originalMintId: mintId,
               userOriginalMintTokenAccountId: tokenAccountId,
               amount: amount,
+              // TODO use user-defined staking duration
+              duration: 0,
             })
             if (receiptType && receiptType !== ReceiptType.None) {
               const receiptMintId =
@@ -194,21 +139,15 @@ export const useHandleStake = (callback?: () => void) => {
             return transaction
           })
         )
-      } else {
-        ///////////// stake v2 /////////////
-        const stakeInfos = stakeInfosFromTokenData(tokenDatas)
-        txs = await stakeV2(
-          connection,
-          wallet,
-          stakePoolData.parsed.identifier,
-          stakeInfos
-        )
       }
       await executeAllTransactions(
         connection,
         wallet,
         txs.filter((tx): tx is Transaction => tx !== null),
         {
+          confirmOptions: {
+            skipPreflight: true,
+          },
           notificationConfig: {
             message: `Successfully staked`,
             description: 'Stake progress will now dynamically update',

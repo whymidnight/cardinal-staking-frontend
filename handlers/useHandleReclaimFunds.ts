@@ -62,10 +62,13 @@ export const useHandleReclaimFunds = () => {
           .instruction()
         transaction.add(ix)
       } else {
+        // TODO review context - probs not needed
+        /*
         await withReclaimFunds(transaction, connection, wallet, {
           stakePoolId: stakePool.data.pubkey,
           amount: new BN(reclaimAmount || 0),
         })
+        */
       }
       return executeTransaction(connection, transaction, wallet, {})
     },
@@ -86,3 +89,4 @@ export const useHandleReclaimFunds = () => {
     }
   )
 }
+

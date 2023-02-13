@@ -7,28 +7,14 @@ import Typography from '@mui/material/Typography'
 import Menu from '@mui/material/Menu'
 import MenuIcon from '@mui/icons-material/Menu'
 import Container from '@mui/material/Container'
-import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
-import AdbIcon from '@mui/icons-material/Adb'
-import logo from '../assets/catsyard.io.png'
-import yardPaper from '../assets/sealed document.png'
-import Twitter from '../assets/twitter logo.png'
-import Discord from '../assets/discord.png'
-import Website from '../assets/website.png'
-import walletIcon from '../assets/walletIcon.png'
-import { useNavigate } from 'react-router-dom'
-import {
-  useWalletModal,
-  WalletMultiButton,
-} from '@solana/wallet-adapter-react-ui'
-import { setVisible } from '@solana/wallet-adapter-react-ui'
+import { useWalletModal } from '@solana/wallet-adapter-react-ui'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { Link } from '@mui/material'
 import { useRouter } from 'next/router'
 const pages = ['Yardpaper', 'Twitter', 'Discord', 'Website']
-const settings = ['Disconnect']
 
 export function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState(null)
@@ -36,10 +22,10 @@ export function Header() {
   //const navigate = useNavigate();
   const router = useRouter()
 
-  const handleOpenNavMenu = (event) => {
+  const handleOpenNavMenu = (event: any) => {
     setAnchorElNav(event.currentTarget)
   }
-  const handleOpenUserMenu = (event) => {
+  const handleOpenUserMenu = (event: any) => {
     setAnchorElUser(event.currentTarget)
   }
 
@@ -73,6 +59,7 @@ export function Header() {
       position="fixed"
       sx={{ bgcolor: 'rgba(0, 0, 0, 0.6)', boxShadow: 'none' }}
     >
+      {/* @ts-ignore */}
       <Container maxWidth="2440px">
         <Toolbar disableGutters>
           <Box
@@ -263,3 +250,4 @@ export function Header() {
     </AppBar>
   )
 }
+
