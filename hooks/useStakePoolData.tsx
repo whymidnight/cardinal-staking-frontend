@@ -21,21 +21,24 @@ import type {
 import { PublicKey } from '@solana/web3.js'
 import { useEnvironmentCtx } from 'providers/EnvironmentProvider'
 import { useQuery } from 'react-query'
+import { useStakePoolId } from 'hooks/useStakePoolId'
+
 
 export const useStakePoolData = () => {
-  const { connection } = useEnvironmentCtx()
-  const router = useRouter()
-  const {stakePoolId} = router.query;
-  //console.log(stakePoolId);
-  const stakePoolIdPubKey = new PublicKey(stakePoolId!);
+  //const {stakePoolId} = router.query;
+  //console.log(STAKE_POOL_ADDRESS.toString());
+  //const stakePoolIdPubKey = new PublicKey(stakePoolId!);
+  const { data: stakePoolId } = useStakePoolId()
+    const { connection } = useEnvironmentCtx()
 
   return useQuery<
     Pick<IdlAccountData<'stakePool'>, 'pubkey' | 'parsed'> | undefined
   >(
     ['stakePoolData', stakePoolId?.toString()],
     async () => {
-      if (!stakePoolId) return
-      const stakePoolAccountInfo = await connection.getAccountInfo(stakePoolIdPubKey)
+    if (!stakePoolId) return
+          const stakePoolAccountInfo = await connection.getAccountInfo(stakePoolId)
+          console.log(stakePoolAccountInfo)
       if (
         stakePoolAccountInfo?.owner.toString() === STAKE_POOL_ADDRESS.toString()
       ) {
