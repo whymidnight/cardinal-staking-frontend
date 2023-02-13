@@ -1,10 +1,12 @@
 import { withFindOrInitAssociatedTokenAccount } from '@cardinal/common'
 import { unstake as unstakeV2 } from '@cardinal/rewards-center'
 import { unstake } from '@cardinal/staking'
+import BN from 'bn.js'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { Transaction } from '@solana/web3.js'
 import { executeAllTransactions } from 'api/utils'
 import { notify } from 'common/Notification'
+import { GLOBAL_CONFIG } from 'common/uiConfig'
 import { asWallet } from 'common/Wallets'
 import type { StakeEntryTokenData } from 'hooks/useStakedTokenDatas'
 import { useMutation, useQueryClient } from 'react-query'
@@ -87,10 +89,19 @@ export const useHandleUnstake = (callback?: () => void) => {
                   unstakeTx = txs[0]
                 }
               } else {
+                // TODO need a helper function to unstake and
+                // claim rewards from all reward distributors.
+                // NEED TO BATCH!!!
+                const distributorIds = GLOBAL_CONFIG[
+                  stakePoolId.toString()
+                ]!.rewardDistributors.slice(0, 2).map((_, i) => new BN(i))
+
+                console.log(distributorIds)
+
                 unstakeTx = await unstake(connection, wallet, {
+                  distributorIds,
                   stakePoolId: stakePoolId,
                   originalMintId: token.stakeEntry.parsed?.stakeMint,
-                  skipRewardMintTokenAccount: true,
                 })
               }
               transaction.instructions = [
@@ -99,6 +110,7 @@ export const useHandleUnstake = (callback?: () => void) => {
               ]
               return transaction
             } catch (e) {
+              console.log(e)
               notify({
                 message: `${e}`,
                 description: `Failed to unstake token ${token?.stakeEntry?.pubkey.toString()}`,
@@ -116,6 +128,9 @@ export const useHandleUnstake = (callback?: () => void) => {
         wallet,
         ataTx.instructions.length > 0 ? remainingTxs : txs,
         {
+          confirmOptions: {
+            skipPreflight: true,
+          },
           notificationConfig: {
             message: `Successfully ${
               coolDown ? 'initiated cooldown' : 'unstaked'
@@ -138,3 +153,4 @@ export const useHandleUnstake = (callback?: () => void) => {
     }
   )
 }
+

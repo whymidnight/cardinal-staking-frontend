@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import type {
   CardinalRewardsCenter,
   IdlAccountData,
@@ -18,13 +19,13 @@ import type {
   TypeDef,
 } from '@project-serum/anchor/dist/cjs/program/namespace/types'
 import { PublicKey } from '@solana/web3.js'
-import { useStakePoolId } from 'hooks/useStakePoolId'
 import { useEnvironmentCtx } from 'providers/EnvironmentProvider'
 import { useQuery } from 'react-query'
 
 export const useStakePoolData = () => {
-  const stakePoolId = useStakePoolId()
   const { connection } = useEnvironmentCtx()
+  const router = useRouter()
+  const stakePoolId = new PublicKey(router.route)
 
   return useQuery<
     Pick<IdlAccountData<'stakePool'>, 'pubkey' | 'parsed'> | undefined
@@ -70,9 +71,9 @@ export const isStakePoolV2 = (
   stakePoolData: (
     | StakePoolData
     | TypeDef<
-        AllAccountsMap<CardinalRewardsCenter>['stakePool'],
-        IdlTypes<CardinalRewardsCenter>
-      >
+      AllAccountsMap<CardinalRewardsCenter>['stakePool'],
+      IdlTypes<CardinalRewardsCenter>
+    >
   ) & { type?: string }
 ): boolean =>
   !('requiresCreators' in stakePoolData || stakePoolData.type === 'v1')
@@ -81,9 +82,9 @@ export const stakePoolDataToV2 = (
   stakePoolData:
     | StakePoolData
     | TypeDef<
-        AllAccountsMap<CardinalRewardsCenter>['stakePool'],
-        IdlTypes<CardinalRewardsCenter>
-      >
+      AllAccountsMap<CardinalRewardsCenter>['stakePool'],
+      IdlTypes<CardinalRewardsCenter>
+    >
 ): TypeDef<
   AllAccountsMap<CardinalRewardsCenter>['stakePool'],
   IdlTypes<CardinalRewardsCenter>
@@ -96,7 +97,7 @@ export const stakePoolDataToV2 = (
       totalStaked: poolData.totalStaked,
       resetOnUnstake: poolData.resetOnStake,
       cooldownSeconds: poolData.cooldownSeconds,
-      minStakeSeconds: poolData.minStakeSeconds,
+      minStakeSeconds: null,
       endDate: poolData.endDate,
       stakePaymentInfo: PublicKey.default,
       unstakePaymentInfo: PublicKey.default,

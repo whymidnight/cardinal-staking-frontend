@@ -21,10 +21,51 @@ import { REWARD_QUERY_KEY } from 'handlers/useHandleClaimRewards'
 import { useEnvironmentCtx } from 'providers/EnvironmentProvider'
 import { useQuery } from 'react-query'
 
-import { isStakePoolV2, useStakePoolData } from './useStakePoolData'
+import { useStakePoolData } from './useStakePoolData'
+
+import { GLOBAL_CONFIG } from '../common/uiConfig'
+import { useRouter } from 'next/router'
+
+export const useRewardDistributorsData = () => {
+  const router = useRouter()
+
+  const stakePool = router.route
+  const rewardDistributors = GLOBAL_CONFIG[stakePool]?.rewardDistributors.map(
+    (_rewardDistributor) =>
+      new PublicKey(_rewardDistributor.rewardDistributorPda)
+  )!
+
+  const { connection } = useEnvironmentCtx()
+  const { data: stakePoolData } = useStakePoolData()
+  return useQuery<
+    Pick<IdlAccountData<'rewardDistributor'>, 'pubkey' | 'parsed'>[] | undefined
+  >(
+    [
+      REWARD_QUERY_KEY,
+      'useRewardDistributorData',
+      stakePoolData?.pubkey?.toString(),
+    ],
+    async () => {
+      if (!stakePoolData?.pubkey || !stakePoolData?.parsed) return
+      const rewardDistributorsData = await Promise.all(
+        rewardDistributors.map(async (_rewardDistributorId) => {
+          return await getRewardDistributor(connection, _rewardDistributorId)
+        })
+      )
+
+      return rewardDistributorsData.map((rewardDistributorData) => ({
+        pubkey: rewardDistributorData.pubkey,
+        parsed: rewardDistributorDataToV2(rewardDistributorData.parsed),
+      }))
+    },
+    {
+      enabled: !!stakePoolData?.pubkey,
+      retry: false,
+    }
+  )
+}
 
 export const useRewardDistributorData = () => {
-  const { connection } = useEnvironmentCtx()
   const { data: stakePoolData } = useStakePoolData()
   return useQuery<
     Pick<IdlAccountData<'rewardDistributor'>, 'pubkey' | 'parsed'> | undefined
@@ -35,34 +76,7 @@ export const useRewardDistributorData = () => {
       stakePoolData?.pubkey?.toString(),
     ],
     async () => {
-      if (!stakePoolData?.pubkey || !stakePoolData?.parsed) return
-      if (!isStakePoolV2(stakePoolData.parsed)) {
-        const [rewardDistributorId] = await findRewardDistributorId(
-          stakePoolData.pubkey
-        )
-        const rewardDistributorData = await getRewardDistributor(
-          connection,
-          rewardDistributorId
-        )
-        return {
-          pubkey: rewardDistributorId,
-          parsed: rewardDistributorDataToV2(rewardDistributorData.parsed),
-        }
-      } else {
-        const rewardDistributorId = findRewardDistributorIdV2(
-          stakePoolData?.pubkey,
-          new BN(0)
-        )
-        const rewardDistributorData = await fetchIdlAccount(
-          connection,
-          rewardDistributorId,
-          'rewardDistributor'
-        )
-        return {
-          pubkey: rewardDistributorId,
-          parsed: rewardDistributorDataToV2(rewardDistributorData.parsed),
-        }
-      }
+      return undefined
     },
     {
       enabled: !!stakePoolData?.pubkey,
@@ -75,9 +89,9 @@ export const isRewardDistributorV2 = (
   rewardDistributorData: (
     | RewardDistributorData
     | TypeDef<
-        AllAccountsMap<CardinalRewardsCenter>['rewardDistributor'],
-        IdlTypes<CardinalRewardsCenter>
-      >
+      AllAccountsMap<CardinalRewardsCenter>['rewardDistributor'],
+      IdlTypes<CardinalRewardsCenter>
+    >
   ) & { type?: 'v1' | 'v2' }
 ): boolean =>
   !('maxSupply' in rewardDistributorData || rewardDistributorData.type === 'v1')
@@ -86,9 +100,9 @@ export const rewardDistributorDataToV2 = (
   rewardDistributorData:
     | RewardDistributorData
     | TypeDef<
-        AllAccountsMap<CardinalRewardsCenter>['rewardDistributor'],
-        IdlTypes<CardinalRewardsCenter>
-      >
+      AllAccountsMap<CardinalRewardsCenter>['rewardDistributor'],
+      IdlTypes<CardinalRewardsCenter>
+    >
 ): TypeDef<
   AllAccountsMap<CardinalRewardsCenter>['rewardDistributor'],
   IdlTypes<CardinalRewardsCenter>
@@ -99,7 +113,8 @@ export const rewardDistributorDataToV2 = (
       bump: rwdData.bump,
       stakePool: rwdData.stakePool,
       kind: rwdData.kind,
-      authority: rwdData.authority,
+      // TODO FIX THIS.
+      authority: rwdData.stakePool,
       identifier: new BN(0),
       rewardMint: rwdData.rewardMint,
       rewardAmount: rwdData.rewardAmount,
@@ -125,10 +140,12 @@ export const rewardDistributorDataToV1 = (
     return {
       pubkey: rewardDistributorData.pubkey,
       parsed: {
+        index: 0,
         bump: rewardDistributorData.parsed.bump,
         stakePool: rewardDistributorData.parsed.stakePool,
         kind: rewardDistributorData.parsed.kind,
-        authority: rewardDistributorData.parsed.authority,
+        // TODO FIX THIS.
+        rewardAuthority: rewardDistributorData.parsed.rewardMint,
         rewardMint: rewardDistributorData.parsed.rewardMint,
         rewardAmount: rewardDistributorData.parsed.rewardAmount,
         rewardDurationSeconds:

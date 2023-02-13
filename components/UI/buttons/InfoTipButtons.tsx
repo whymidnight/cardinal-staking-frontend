@@ -1,12 +1,10 @@
 import { InformationCircleIcon } from '@heroicons/react/24/outline'
 import { InformationCircleIcon as InformationCircleIconSolid } from '@heroicons/react/24/solid'
 
-import type { SlavePanelScreens } from '@/components/stake-pool-creation/SlavePanel'
-
 type InfoTipProps = {
-  screen: SlavePanelScreens
-  activeScreen: SlavePanelScreens
-  setActiveScreen: (screen: SlavePanelScreens) => void
+  screen: any
+  activeScreen: any
+  setActiveScreen: (screen: any) => void
 }
 
 export const InfoTipButtons = ({
@@ -25,3 +23,4 @@ export const InfoTipButtons = ({
     )
   }
 }
+

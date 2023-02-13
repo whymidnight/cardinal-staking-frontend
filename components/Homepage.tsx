@@ -1,20 +1,9 @@
-import * as React from 'react'
-import { useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 
-import {
-  Button,
-  Container,
-  Slider,
-  Stack,
-  Grid,
-  LinearProgress,
-} from '@mui/material'
+import { Button, Container, Grid, LinearProgress } from '@mui/material'
 
 import { Header } from 'common/Header'
-//import { Router, useNavigate } from "react-router-dom";
-import { pool_configuration } from 'pages'
-import bg from 'assets/Rec.png'
+import { NORTH, EAST, SOUTH, WEST } from 'common/uiConfig'
 import { useRouter } from 'next/router'
 import zIndex from '@mui/material/styles/zIndex'
 
@@ -29,7 +18,7 @@ const NorthButton = () => {
       className="freefont"
       onClick={() => {
         gotoStake('north')
-        router.push(pool_configuration.stake_pool_north.id)
+        router.push(NORTH)
       }}
       sx={{
         textTransform: 'none',
@@ -57,7 +46,7 @@ const EastButton = () => {
       className="freefont"
       onClick={() => {
         gotoStake('east')
-        router.push(pool_configuration.stake_pool_east.id)
+        router.push(EAST)
       }}
       sx={{
         textTransform: 'none',
@@ -84,7 +73,7 @@ const WestButton = () => {
       className="freefont"
       onClick={() => {
         gotoStake('west')
-        router.push(pool_configuration.stake_pool_west.id)
+        router.push(WEST)
       }}
       sx={{
         textTransform: 'none',
@@ -111,7 +100,7 @@ const SouthButton = () => {
       className="freefont"
       onClick={() => {
         gotoStake('south')
-        router.push(pool_configuration.stake_pool_south.id)
+        router.push(SOUTH)
       }}
       sx={{
         textTransform: 'none',
@@ -127,16 +116,10 @@ const SouthButton = () => {
   )
 }
 export default function Homepage() {
-  const theme = useTheme()
-  //const navigate = useNavigate();
-  const router = useRouter()
-  const gotoStake = (place: string) => {
-    localStorage.setItem('place', place)
-  }
-
   return (
     <>
       <Container
+        /* @ts-ignore */
         maxWidth="2440px"
         sx={{
           minHeight: '100vh',

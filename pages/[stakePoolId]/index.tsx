@@ -1,15 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { stakePoolMetadatas } from 'api/mapping'
-import { Footer } from 'common/Footer'
-import { FooterSlim } from 'common/FooterSlim'
 import { Header } from 'common/Header'
-import { HeroLarge } from 'common/HeroLarge'
-import { Info } from 'common/Info'
-import { TabSelector } from 'common/TabSelector'
-import { contrastColorMode } from 'common/utils'
-import { AttributeAnalytics } from 'components/AttributeAnalytics'
 import { PerformanceStats } from 'components/PerformanceStats'
-import { StakePoolLeaderboard } from 'components/StakePoolLeaderboard'
 import { StakePoolNotice } from 'components/StakePoolNotice'
 import { useRewardDistributorData } from 'hooks/useRewardDistributorData'
 import { useStakedTokenDatas } from 'hooks/useStakedTokenDatas'
@@ -18,18 +10,8 @@ import { useStakePoolMetadata } from 'hooks/useStakePoolMetadata'
 import { useUserRegion } from 'hooks/useUserRegion'
 import { UnstakedTokens } from '@/components/token-staking/unstaked-tokens/UnstakedTokens'
 import { StakedTokens } from '@/components/token-staking/staked-tokens/StakedTokens'
-import Head from 'next/head'
 import { useRouter } from 'next/router'
-import {
-  Box,
-  Button,
-  Container,
-  FormControl,
-  Grid,
-  MenuItem,
-  Select,
-  Typography,
-} from '@mui/material'
+import { Box, Container, FormControl, MenuItem, Select } from '@mui/material'
 import { HeroStats } from '@/components/hero-stats/HeroStats'
 import North from '@/components/pools/north'
 import East from '@/components/pools/east'
@@ -74,13 +56,13 @@ export default function StakePage(props: {
   const [age, setAge] = useState(0)
   const [place, setPlace] = useState('east')
 
-  const handleChange = (event) => {
+  const handleChange = (event: any) => {
     setAge(event.target.value)
   }
 
   const getPlace = () => {
     let place = localStorage.getItem('place')
-    setPlace(place)
+    setPlace(place!)
   }
 
   useEffect(() => {
@@ -91,6 +73,7 @@ export default function StakePage(props: {
     <>
       <Header />
       <Container
+        /* @ts-ignore */
         maxWidth="2440px"
         sx={{
           pt: '15vh',
