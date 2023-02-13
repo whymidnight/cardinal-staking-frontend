@@ -14,10 +14,14 @@ import { useRewardsRate } from 'hooks/useRewardsRate'
 import { useStakedTokenDatas } from 'hooks/useStakedTokenDatas'
 import { useStakePoolMetadata } from 'hooks/useStakePoolMetadata'
 import { useEnvironmentCtx } from 'providers/EnvironmentProvider'
-
+export type StatProps = {
+    className?: React.HTMLAttributes<HTMLDivElement>,
+    token: string
+}
 export const PerformanceStats: React.FC<
-  React.HTMLAttributes<HTMLDivElement>
-> = ({ className }: React.HTMLAttributes<HTMLDivElement>) => {
+  StatProps
+> = ({ className, token }: StatProps) => {
+  console.log(token)
   const { environment } = useEnvironmentCtx()
   const rewardDistributorData = useRewardDistributorData()
   const rewardMintInfo = useRewardMintInfo()
@@ -26,6 +30,7 @@ export const PerformanceStats: React.FC<
   const stakedTokenDatas = useStakedTokenDatas()
   const rewards = useRewards()
   const handleClaimRewards = useHandleClaimRewards()
+  
 
   if (!rewardDistributorData.data) return <></>
   return (

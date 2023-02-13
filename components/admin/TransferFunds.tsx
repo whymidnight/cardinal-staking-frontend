@@ -2,17 +2,18 @@ import { RewardDistributorKind } from '@cardinal/staking/dist/cjs/programs/rewar
 import { AsyncButton } from 'common/Button'
 import { FormFieldTitleInput } from 'common/FormFieldInput'
 import { useHandleTransferFunds } from 'handlers/useHandleTransferFunds'
-import {
+/**import {
   isRewardDistributorV2,
   useRewardDistributorData,
 } from 'hooks/useRewardDistributorData'
-import { useRewardMintInfo } from 'hooks/useRewardMintInfo'
+import { useRewardMintInfo } from 'hooks/useRewardMintInfo'**/
+
 import { useState } from 'react'
 
 import { BNInput } from '../UI/inputs/BNInput'
 
 export const TransferFunds = () => {
-  const [transferAmount, setTransferAmount] = useState<string>()
+  /** const [transferAmount, setTransferAmount] = useState<string>()
   const rewardMintInfo = useRewardMintInfo()
   const rewardDistributor = useRewardDistributorData()
   const handleTransferFunds = useHandleTransferFunds()
@@ -52,4 +53,6 @@ export const TransferFunds = () => {
       </div>
     </div>
   )
+  **/
+  return <></>
 }

@@ -25,7 +25,9 @@ import { useQuery } from 'react-query'
 export const useStakePoolData = () => {
   const { connection } = useEnvironmentCtx()
   const router = useRouter()
-  const stakePoolId = new PublicKey(router.route)
+  const {stakePoolId} = router.query;
+  //console.log(stakePoolId);
+  const stakePoolIdPubKey = new PublicKey(stakePoolId!);
 
   return useQuery<
     Pick<IdlAccountData<'stakePool'>, 'pubkey' | 'parsed'> | undefined
@@ -33,7 +35,7 @@ export const useStakePoolData = () => {
     ['stakePoolData', stakePoolId?.toString()],
     async () => {
       if (!stakePoolId) return
-      const stakePoolAccountInfo = await connection.getAccountInfo(stakePoolId)
+      const stakePoolAccountInfo = await connection.getAccountInfo(stakePoolIdPubKey)
       if (
         stakePoolAccountInfo?.owner.toString() === STAKE_POOL_ADDRESS.toString()
       ) {

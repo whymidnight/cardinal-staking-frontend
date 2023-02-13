@@ -44,7 +44,10 @@ export default function StakePage(props: {
   const { isFetched: stakePoolLoaded } = useStakePoolData()
   const userRegion = useUserRegion()
   const rewardDistributorData = useRewardDistributorData()
+  console.log(rewardDistributorData)
   const stakedTokenDatas = useStakedTokenDatas()
+
+  console.log(stakedTokenDatas)
   const [pane, setPane] = useState<PANE_OPTIONS>('dashboard')
   const stakePoolDisplayName = props.stakePoolMetadataName
     ? props.stakePoolMetadataName.replace(' Staking', '') + ' Staking'
@@ -117,7 +120,9 @@ export default function StakePage(props: {
               {!!rewardDistributorData.data &&
                 !!stakedTokenDatas.data?.length && (
                   <div className="flex grow items-center justify-end">
-                    <PerformanceStats />
+                    <PerformanceStats token={'token1'} />
+                    <PerformanceStats token={'token2'} />
+                    <PerformanceStats token={'token3'} />
                   </div>
                 )}
               <HeroStats />

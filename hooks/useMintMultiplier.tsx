@@ -13,14 +13,16 @@ import { notify } from 'common/Notification'
 import { useEnvironmentCtx } from 'providers/EnvironmentProvider'
 import { useQuery } from 'react-query'
 
-import {
+/**import {
   isRewardDistributorV2,
   useRewardDistributorData,
 } from './useRewardDistributorData'
+**/
 import { useStakePoolId } from './useStakePoolId'
 import { useWalletId } from './useWalletId'
 
 export const useMintMultiplier = (mint: string) => {
+  /**
   const stakePoolId = useStakePoolId()
   const walletId = useWalletId()
   const rewardDistributor = useRewardDistributorData()
@@ -83,5 +85,7 @@ export const useMintMultiplier = (mint: string) => {
     },
     { enabled: !!stakePoolId && mint.length > 0 }
   )
+  **/
+  return undefined
 }
 

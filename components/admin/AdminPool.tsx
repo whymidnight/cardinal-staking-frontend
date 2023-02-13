@@ -1,6 +1,7 @@
 import { pubKeyUrl, shortPubKey } from '@cardinal/common'
 import { LinkIcon } from '@heroicons/react/24/outline'
 import type { PublicKey } from '@solana/web3.js'
+/**
 import { TabSelector } from 'common/TabSelector'
 import { withCluster } from 'common/utils'
 import { useRewardDistributorData } from 'hooks/useRewardDistributorData'
@@ -21,6 +22,7 @@ import { Snapshot } from './Snapshot'
 import { StakePoolBalance } from './StakePoolBalance'
 import { StakePoolUpdate } from './StakePoolUpdate'
 import { TransferFunds } from './TransferFunds'
+**/
 
 export type PANE_OPTIONS =
   | 'stake-pool'
@@ -30,11 +32,10 @@ export type PANE_OPTIONS =
   | 'reward-funds'
   | 'snapshot'
 
-export const AdminStakePool = ({
-  onSuccess,
-}: {
+export const AdminStakePool = ({}: {
   onSuccess?: (p: PublicKey | undefined) => void
 }) => {
+  /**  onSuccess,
   const { environment } = useEnvironmentCtx()
   const { data: config } = useStakePoolMetadata()
   const stakePoolId = useStakePoolId()
@@ -163,4 +164,6 @@ export const AdminStakePool = ({
       </div>
     </div>
   )
+  **/
+  return <></>
 }

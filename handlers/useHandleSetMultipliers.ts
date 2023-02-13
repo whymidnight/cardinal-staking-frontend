@@ -23,13 +23,14 @@ import { fetchRewardEntry } from 'api/fetchRewardEntry'
 import { fetchStakeEntry } from 'api/fetchStakeEntry'
 import { notify } from 'common/Notification'
 import { asWallet } from 'common/Wallets'
-import { useRewardDistributorData } from 'hooks/useRewardDistributorData'
+//import { useRewardDistributorData } from 'hooks/useRewardDistributorData'
 import { useMutation } from 'react-query'
 
 import { isStakePoolV2, useStakePoolData } from '../hooks/useStakePoolData'
 import { useEnvironmentCtx } from '../providers/EnvironmentProvider'
 
 export const useHandleSetMultipliers = () => {
+  /**
   const walletContextWallet = useWallet()
   const wallet = asWallet(walletContextWallet)
   const { connection } = useEnvironmentCtx()
@@ -212,5 +213,7 @@ export const useHandleSetMultipliers = () => {
       },
     }
   )
+    **/
+   return undefined;
 }
 

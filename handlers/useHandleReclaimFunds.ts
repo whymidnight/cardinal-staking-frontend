@@ -10,7 +10,7 @@ import { useWallet } from '@solana/wallet-adapter-react'
 import { Transaction } from '@solana/web3.js'
 import { notify } from 'common/Notification'
 import { asWallet } from 'common/Wallets'
-import { useRewardDistributorData } from 'hooks/useRewardDistributorData'
+//import { useRewardDistributorData } from 'hooks/useRewardDistributorData'
 import { useMutation } from 'react-query'
 import { TOKEN_PROGRAM_ID } from 'spl-token-v3'
 
@@ -18,6 +18,7 @@ import { isStakePoolV2, useStakePoolData } from '../hooks/useStakePoolData'
 import { useEnvironmentCtx } from '../providers/EnvironmentProvider'
 
 export const useHandleReclaimFunds = () => {
+  /**
   const wallet = asWallet(useWallet())
   const { connection } = useEnvironmentCtx()
   const stakePool = useStakePoolData()
@@ -63,12 +64,10 @@ export const useHandleReclaimFunds = () => {
         transaction.add(ix)
       } else {
         // TODO review context - probs not needed
-        /*
         await withReclaimFunds(transaction, connection, wallet, {
           stakePoolId: stakePool.data.pubkey,
           amount: new BN(reclaimAmount || 0),
         })
-        */
       }
       return executeTransaction(connection, transaction, wallet, {})
     },
@@ -88,5 +87,8 @@ export const useHandleReclaimFunds = () => {
       },
     }
   )
+*/
+  return undefined
+  
 }
 

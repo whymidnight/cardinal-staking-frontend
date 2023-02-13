@@ -4,10 +4,11 @@ import { FormFieldTitleInput } from 'common/FormFieldInput'
 import { notify } from 'common/Notification'
 import { tryFormatInput, tryParseInput } from 'common/units'
 import { useHandleReclaimFunds } from 'handlers/useHandleReclaimFunds'
-import {
+/*import {
   isRewardDistributorV2,
   useRewardDistributorData,
 } from 'hooks/useRewardDistributorData'
+*/
 import { useRewardDistributorTokenAccount } from 'hooks/useRewardDistributorTokenAccount'
 import { useRewardMintInfo } from 'hooks/useRewardMintInfo'
 import { useState } from 'react'
@@ -15,6 +16,7 @@ import { useState } from 'react'
 import { TextInputIcon } from '../UI/inputs/TextInputIcon'
 
 export const ReclaimFunds = () => {
+  /*
   const [reclaimAmount, setReclaimAmount] = useState<string>()
   const rewardMintInfo = useRewardMintInfo()
   const rewardDistributor = useRewardDistributorData()
@@ -82,4 +84,6 @@ export const ReclaimFunds = () => {
       </div>
     </div>
   )
+  */
+  return <></>
 }
