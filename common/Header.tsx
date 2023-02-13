@@ -1,94 +1,96 @@
-
-import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
-import logo from "../assets/catsyard.io.png";
-import yardPaper from "../assets/sealed document.png";
-import Twitter from "../assets/twitter logo.png";
-import Discord from "../assets/discord.png";
-import Website from "../assets/website.png";
-import walletIcon from "../assets/walletIcon.png";
-import { useNavigate } from "react-router-dom";
+import * as React from 'react'
+import AppBar from '@mui/material/AppBar'
+import Box from '@mui/material/Box'
+import Toolbar from '@mui/material/Toolbar'
+import IconButton from '@mui/material/IconButton'
+import Typography from '@mui/material/Typography'
+import Menu from '@mui/material/Menu'
+import MenuIcon from '@mui/icons-material/Menu'
+import Container from '@mui/material/Container'
+import Avatar from '@mui/material/Avatar'
+import Button from '@mui/material/Button'
+import Tooltip from '@mui/material/Tooltip'
+import MenuItem from '@mui/material/MenuItem'
+import AdbIcon from '@mui/icons-material/Adb'
+import logo from '../assets/catsyard.io.png'
+import yardPaper from '../assets/sealed document.png'
+import Twitter from '../assets/twitter logo.png'
+import Discord from '../assets/discord.png'
+import Website from '../assets/website.png'
+import walletIcon from '../assets/walletIcon.png'
+import { useNavigate } from 'react-router-dom'
 import {
   useWalletModal,
   WalletMultiButton,
-} from "@solana/wallet-adapter-react-ui";
-import { setVisible } from "@solana/wallet-adapter-react-ui";
-import { useWallet } from "@solana/wallet-adapter-react";
-import { Link } from "@mui/material";
-
-const pages = ["Yardpaper", "Twitter", "Discord", "Website"];
-const settings = ["Disconnect"];
+} from '@solana/wallet-adapter-react-ui'
+import { setVisible } from '@solana/wallet-adapter-react-ui'
+import { useWallet } from '@solana/wallet-adapter-react'
+import { Link } from '@mui/material'
+import { useRouter } from 'next/router'
+const pages = ['Yardpaper', 'Twitter', 'Discord', 'Website']
+const settings = ['Disconnect']
 
 export function Header() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = React.useState(null)
+  const [anchorElUser, setAnchorElUser] = React.useState(null)
   //const navigate = useNavigate();
+  const router = useRouter()
 
   const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
+    setAnchorElNav(event.currentTarget)
+  }
   const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
+    setAnchorElUser(event.currentTarget)
+  }
 
   const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
+    setAnchorElNav(null)
+  }
 
   const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+    setAnchorElUser(null)
+  }
 
   const Home = () => {
-    //navigate("/");
-  };
+    router.push('/')
+  }
 
-  const { setVisible } = useWalletModal();
+  const { setVisible } = useWalletModal()
 
   const connect = () => {
-    setVisible(true);
-  };
+    setVisible(true)
+  }
 
-  const { connected, publicKey, disconnect } = useWallet();
+  const { connected, publicKey, disconnect } = useWallet()
 
   const DisconnectWallet = () => {
-    disconnect();
-    handleCloseUserMenu();
-  };
+    disconnect()
+    handleCloseUserMenu()
+  }
 
   return (
-    <AppBar position="fixed" sx={{ bgcolor: "rgba(0, 0, 0, 0.6)", boxShadow:"none" }}>
+    <AppBar
+      position="fixed"
+      sx={{ bgcolor: 'rgba(0, 0, 0, 0.6)', boxShadow: 'none' }}
+    >
       <Container maxWidth="2440px">
         <Toolbar disableGutters>
           <Box
             sx={{
               mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
+              display: { xs: 'none', md: 'flex' },
+              fontFamily: 'monospace',
               fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "white",
-              textDecoration: "none",
-              cursor: "pointer",
+              letterSpacing: '.3rem',
+              color: 'white',
+              textDecoration: 'none',
+              cursor: 'pointer',
             }}
-            onClick={Home}
           >
-            <img src={'/assets/catsyard.io.png'} />
+            <img src={'/assets/catsyard.io.png'} onClick={Home} />
           </Box>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -103,18 +105,18 @@ export function Header() {
               id="menu-appbar"
               anchorEl={anchorElNav}
               anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
+                vertical: 'bottom',
+                horizontal: 'left',
               }}
               keepMounted
               transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
+                vertical: 'top',
+                horizontal: 'left',
               }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: "block", md: "none" },
+                display: { xs: 'block', md: 'none' },
               }}
             >
               {pages.map((page) => (
@@ -127,19 +129,19 @@ export function Header() {
           <Box
             sx={{
               mr: 2,
-              display: { xs: "flex", md: "none" },
+              display: { xs: 'flex', md: 'none' },
               flexGrow: 1,
-              fontFamily: "monospace",
+              fontFamily: 'monospace',
               fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
             }}
           >
-            <img src={'/assets/catsyard.io.png'} />
+            <img src={'/assets/catsyard.io.png'} onClick={Home} />
           </Box>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}></Box>
-          <Box sx={{ display: { xs: "none", md: "flex" }, gap: "20px" }}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}></Box>
+          <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: '20px' }}>
             <Link
               target="_blank"
               href="https://yardpaper.gitbook.io/yardpaper/catsyard-dive-in/the-yard-mission"
@@ -147,16 +149,19 @@ export function Header() {
               onClick={handleCloseNavMenu}
               sx={{
                 my: 2,
-                color: "white",
-                display: "flex",
-                textTransform: "none",
-                alignItems: "center",
-                gap: "8px",
-                fontSize: "16px",
-                fontWeight: "700",
+                color: 'white',
+                display: 'flex',
+                textTransform: 'none',
+                alignItems: 'center',
+                gap: '8px',
+                fontSize: '16px',
+                fontWeight: '700',
               }}
             >
-              <img src={'/assets/sealed document.png'} style={{ height: "40px" }} />
+              <img
+                src={'/assets/sealed document.png'}
+                style={{ height: '40px' }}
+              />
               Yardpaper
             </Link>
             <Link
@@ -166,17 +171,16 @@ export function Header() {
               onClick={handleCloseNavMenu}
               sx={{
                 my: 2,
-                color: "white",
-                display: "flex",
-                textTransform: "none",
-                alignItems: "center",
-                gap: "8px",
-                fontSize: "16px",
-                fontWeight: "700",
+                color: 'white',
+                display: 'flex',
+                textTransform: 'none',
+                alignItems: 'center',
+                gap: '8px',
+                fontSize: '16px',
+                fontWeight: '700',
               }}
             >
-              <img src={'assets/twitter logo.png'} style={{ height: "40px" }} />
-          
+              <img src={'assets/twitter logo.png'} style={{ height: '40px' }} />
             </Link>
             <Link
               target="_blank"
@@ -185,19 +189,17 @@ export function Header() {
               onClick={handleCloseNavMenu}
               sx={{
                 my: 2,
-                color: "white",
-                display: "flex",
-                textTransform: "none",
-                alignItems: "center",
-                gap: "8px",
-                fontSize: "16px",
-                fontWeight: "700",
+                color: 'white',
+                display: 'flex',
+                textTransform: 'none',
+                alignItems: 'center',
+                gap: '8px',
+                fontSize: '16px',
+                fontWeight: '700',
               }}
             >
-              <img src={'/assets/discord.png'} style={{ height: "40px" }} />
-          
+              <img src={'/assets/discord.png'} style={{ height: '40px' }} />
             </Link>
-
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
@@ -206,11 +208,11 @@ export function Header() {
                 <Button
                   variant="contained"
                   sx={{
-                    bgcolor: "black",
-                    borderRadius: "15px",
-                    fontSize: "12px",
-                    ml: "20px",
-                    textTransform: "none",
+                    bgcolor: 'black',
+                    borderRadius: '15px',
+                    fontSize: '12px',
+                    ml: '20px',
+                    textTransform: 'none',
                   }}
                   onClick={handleOpenUserMenu}
                 >
@@ -222,11 +224,11 @@ export function Header() {
                 <Button
                   variant="contained"
                   sx={{
-                    bgcolor: "black",
-                    borderRadius: "15px",
-                    fontSize: "12px",
-                    ml: "20px",
-                    textTransform: "none",
+                    bgcolor: 'black',
+                    borderRadius: '15px',
+                    fontSize: '12px',
+                    ml: '20px',
+                    textTransform: 'none',
                   }}
                   onClick={connect}
                 >
@@ -236,17 +238,17 @@ export function Header() {
               )}
             </Tooltip>
             <Menu
-              sx={{ mt: "45px" }}
+              sx={{ mt: '45px' }}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
+                vertical: 'top',
+                horizontal: 'right',
               }}
               keepMounted
               transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
+                vertical: 'top',
+                horizontal: 'right',
               }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
@@ -259,6 +261,5 @@ export function Header() {
         </Toolbar>
       </Container>
     </AppBar>
-  );
+  )
 }
-

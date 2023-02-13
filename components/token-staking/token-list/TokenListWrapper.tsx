@@ -30,7 +30,7 @@ export const TokenListWrapper = ({
 
   return (
     <div
-      className="relative my-auto mb-4 h-[60vh] overflow-y-auto overflow-x-hidden rounded-md bg-white bg-opacity-5 p-5"
+      className="relative my-auto mb-4 h-[40vh] overflow-y-auto overflow-x-hidden rounded-md bg-white bg-opacity-5 p-5"
       style={{
         background:
           stakePoolMetadata?.colors?.backgroundSecondary &&

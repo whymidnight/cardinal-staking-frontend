@@ -72,7 +72,8 @@ export const StakedTokenList = ({
           message="No tokens currently staked."
         />
       ) : (
-        <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 xl:grid-cols-2"
+        style={{height:"400px"}}>
           {!stakePoolMetadata?.notFound &&
             stakedTokenDatas.data &&
             stakedTokenDatas.data

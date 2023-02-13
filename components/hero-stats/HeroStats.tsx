@@ -29,17 +29,11 @@ export const HeroStats: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
       }}
     >
       <div className="flex flex-1 flex-col items-center justify-center">
-        <div
-          className="text-lg text-medium-4"
-        >
-          Total Staked
-        </div>
+        <div className="text-lg text-medium-4">Total Staked</div>
         {!totalStaked.isFetched ? (
           <div className="h-6 w-10 animate-pulse rounded-md bg-border"></div>
         ) : (
-          <div
-            className="text-center text-xl"
-          >
+          <div className="text-center text-xl text-light-1">
             {totalStaked.data?.toLocaleString()}{' '}
             {stakePoolMetadata?.maxStaked
               ? `/ ${stakePoolMetadata?.maxStaked.toLocaleString()}`
@@ -51,17 +45,11 @@ export const HeroStats: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
         <>
           <div className="mx-6 my-auto hidden h-10 w-[1px] bg-border md:flex"></div>
           <div className="flex flex-1 flex-col items-center justify-center">
-            <p
-              className="text-lg text-medium-4"
-            >
-              Percent Staked
-            </p>
+            <p className="text-lg text-medium-4">Percent Staked</p>
             {!stakePoolEntries.data ? (
               <div className="h-6 w-10 animate-pulse rounded-md bg-border"></div>
             ) : (
-              <div
-                className="text-center text-xl "
-              >
+              <div className="text-center text-xl ">
                 {stakePoolEntries.data?.length &&
                   Math.floor(
                     ((stakePoolEntries.data?.length * 100) / (maxStaked ?? 0)) *
@@ -78,11 +66,7 @@ export const HeroStats: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
           <div className="mx-6 my-auto hidden h-10 w-[1px] bg-border md:flex"></div>
           <div className="mx-6 my-auto hidden h-10 w-[1px] bg-border md:flex"></div>
           <div className="flex flex-1 flex-col items-center justify-center">
-            <p
-              className="text-lg text-medium-4"
-            >
-              Treasury Balance
-            </p>
+            <p className="text-lg text-medium-4">Treasury Balance</p>
             <TreasuryBalance className="text-center text-xl text-light-1" />
           </div>
         </>
