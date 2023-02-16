@@ -2,14 +2,15 @@ import { withFindOrInitAssociatedTokenAccount } from '@cardinal/common'
 import { claimRewards as claimRewardsV2 } from '@cardinal/rewards-center'
 import { claimRewards } from '@cardinal/staking'
 import { useWallet } from '@solana/wallet-adapter-react'
-import { Transaction } from '@solana/web3.js'
+import { PublicKey, Transaction } from '@solana/web3.js'
 import { executeAllTransactions } from 'api/utils'
 import { notify } from 'common/Notification'
 import { asWallet } from 'common/Wallets'
 import { TOKEN_DATAS_KEY } from 'hooks/useAllowedTokenDatas'
 import type { StakeEntryTokenData } from 'hooks/useStakedTokenDatas'
 import { useMutation, useQueryClient } from 'react-query'
-
+import { withClaimRewards } from '@cardinal/staking/dist/cjs/programs/rewardDistributor/transaction'
+import BN from 'bn.js'
 import {
   isRewardDistributorV2,
   useRewardDistributorData,
@@ -25,7 +26,7 @@ export const useHandleClaimRewards = () => {
   const queryClient = useQueryClient()
   const { data: stakePool } = useStakePoolData()
   const rewardDistributorData = useRewardDistributorData()
-
+  
   return useMutation(
     async ({
       tokenDatas,
@@ -82,10 +83,13 @@ export const useHandleClaimRewards = () => {
               } else {
                 console.log('WE ARE V1')
                 claimTxs = [
-                  await claimRewards(connection, wallet, {
+                  await withClaimRewards(transaction, connection, wallet, {
+                    distributorId: new BN(0),
                     stakePoolId: stakePool.pubkey,
                     stakeEntryId: token.stakeEntry.pubkey,
                     skipRewardMintTokenAccount: true,
+                    lastStaker: new PublicKey("asdfasdf"),
+                    stakePoolDuration: 54654854
                   }),
                 ]
               }

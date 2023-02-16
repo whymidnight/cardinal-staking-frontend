@@ -93,7 +93,7 @@ export const useHandleStake = (callback?: () => void) => {
         const stakeInfos = stakeInfosFromTokenData(tokenDatas)
         const stakeEntryIds = await Promise.all(
           stakeInfos.map(async ({ mintId }) =>
-            findStakeEntryId(stakePoolId, mintId)
+            findStakeEntryId(stakePoolId.data, mintId)
           )
         )
         let stakeEntries = await getStakeEntries(connection, stakeEntryIds)
@@ -107,13 +107,13 @@ export const useHandleStake = (callback?: () => void) => {
             )
             if (!stakeEntry) {
               await withInitStakeEntry(transaction, connection, wallet, {
-                stakePoolId: stakePoolId,
+                stakePoolId: stakePoolId.data,
                 originalMintId: mintId,
               })
             }
 
             await withStake(transaction, connection, wallet, {
-              stakePoolId: stakePoolId,
+              stakePoolId: stakePoolId.data,
               originalMintId: mintId,
               userOriginalMintTokenAccountId: tokenAccountId,
               amount: amount,
@@ -129,7 +129,7 @@ export const useHandleStake = (callback?: () => void) => {
                 throw 'Stake entry has no stake mint. Initialize stake mint first.'
               }
               await withClaimReceiptMint(transaction, connection, wallet, {
-                stakePoolId: stakePoolId,
+                stakePoolId: stakePoolId.data,
                 stakeEntryId: stakeEntryIds[i]!,
                 originalMintId: mintId,
                 receiptMintId: receiptMintId,

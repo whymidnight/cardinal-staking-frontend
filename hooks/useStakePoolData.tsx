@@ -22,7 +22,7 @@ import { PublicKey } from '@solana/web3.js'
 import { useEnvironmentCtx } from 'providers/EnvironmentProvider'
 import { useQuery } from 'react-query'
 import { useStakePoolId } from 'hooks/useStakePoolId'
-
+import { getStakePool } from '@cardinal/staking/dist/cjs/programs/stakePool/accounts'
 
 export const useStakePoolData = () => {
   //const {stakePoolId} = router.query;
@@ -39,6 +39,8 @@ export const useStakePoolData = () => {
     if (!stakePoolId) return
           const stakePoolAccountInfo = await connection.getAccountInfo(stakePoolId)
           console.log(stakePoolAccountInfo)
+          const what = getStakePool(connection, stakePoolId)
+          console.log(what);
       if (
         stakePoolAccountInfo?.owner.toString() === STAKE_POOL_ADDRESS.toString()
       ) {
