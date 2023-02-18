@@ -113,6 +113,7 @@ export const StakedToken = ({
           </div>
           <StakedStats tokenData={tk} />
           <div className="flex p-2">
+            {/*}
             <button
               style={{
                 background:
@@ -130,6 +131,7 @@ export const StakedToken = ({
             >
               Unstake
             </button>
+            */}
           </div>
         </div>
       </TokenWrapper>

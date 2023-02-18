@@ -79,9 +79,11 @@ export const useHandleStake = (callback?: () => void) => {
     async ({
       tokenDatas,
       receiptType = ReceiptType.Original,
+      duration,
     }: {
       tokenDatas: AllowedTokenData[]
       receiptType?: ReceiptType
+      duration: number
     }): Promise<string[]> => {
       if (!wallet) throw 'Wallet not connected'
       if (!stakePoolId) throw 'Stake pool not found'
@@ -93,7 +95,7 @@ export const useHandleStake = (callback?: () => void) => {
         const stakeInfos = stakeInfosFromTokenData(tokenDatas)
         const stakeEntryIds = await Promise.all(
           stakeInfos.map(async ({ mintId }) =>
-            findStakeEntryId(stakePoolId.data, mintId)
+            findStakeEntryId(stakePoolId.data!, mintId)
           )
         )
         let stakeEntries = await getStakeEntries(connection, stakeEntryIds)
@@ -107,18 +109,18 @@ export const useHandleStake = (callback?: () => void) => {
             )
             if (!stakeEntry) {
               await withInitStakeEntry(transaction, connection, wallet, {
-                stakePoolId: stakePoolId.data,
+                stakePoolId: stakePoolId.data!,
                 originalMintId: mintId,
               })
             }
 
             await withStake(transaction, connection, wallet, {
-              stakePoolId: stakePoolId.data,
+              stakePoolId: stakePoolId.data!,
               originalMintId: mintId,
               userOriginalMintTokenAccountId: tokenAccountId,
               amount: amount,
               // TODO use user-defined staking duration
-              duration: 0,
+              duration: duration,
             })
             if (receiptType && receiptType !== ReceiptType.None) {
               const receiptMintId =
@@ -129,7 +131,7 @@ export const useHandleStake = (callback?: () => void) => {
                 throw 'Stake entry has no stake mint. Initialize stake mint first.'
               }
               await withClaimReceiptMint(transaction, connection, wallet, {
-                stakePoolId: stakePoolId.data,
+                stakePoolId: stakePoolId.data!,
                 stakeEntryId: stakeEntryIds[i]!,
                 originalMintId: mintId,
                 receiptMintId: receiptMintId,

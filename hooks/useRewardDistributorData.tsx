@@ -28,12 +28,21 @@ import { useRouter } from 'next/router'
 
 export const useRewardDistributorsData = () => {
   const router = useRouter()
-
+  const faction = localStorage.getItem("place")
   const stakePool = router.route
-  const rewardDistributors = GLOBAL_CONFIG[stakePool]?.rewardDistributors.map(
-    (_rewardDistributor) =>
-      new PublicKey(_rewardDistributor.rewardDistributorPda)
-  )!
+  if (faction !== null){
+
+  const rewardDistributors = GLOBAL_CONFIG.map((factionPool)=>{
+    if (faction === factionPool.faction){
+
+      return [
+        new PublicKey(factionPool.rewardDistributors['0']![0]!.rewardDistributorPda),
+        new PublicKey(factionPool.rewardDistributors['6']![0]!.rewardDistributorPda),
+        new PublicKey(factionPool.rewardDistributors['10']![0]!.rewardDistributorPda),
+      ] 
+    }
+    return [new PublicKey(factionPool.faction)]
+  })
 
   const { connection } = useEnvironmentCtx()
   const { data: stakePoolData } = useStakePoolData()
@@ -48,7 +57,7 @@ export const useRewardDistributorsData = () => {
     async () => {
       if (!stakePoolData?.pubkey || !stakePoolData?.parsed) return
       const rewardDistributorsData = await Promise.all(
-        rewardDistributors.map(async (_rewardDistributorId) => {
+        rewardDistributors!.map(async (_rewardDistributorId) => {
           return await getRewardDistributor(connection, _rewardDistributorId)
         })
       )
@@ -63,6 +72,7 @@ export const useRewardDistributorsData = () => {
       retry: false,
     }
   )
+  }
 }
 
 export const useRewardDistributorData = () => {

@@ -116,7 +116,7 @@ export const UnstakedToken = ({
               </div>
             )}
           <div className="flex p-2">
-            <button
+      {/*      <button
               style={{
                 background:
                   stakePoolMetadata?.colors?.secondary || defaultSecondaryColor,
@@ -136,6 +136,7 @@ export const UnstakedToken = ({
             >
               Stake
             </button>
+            */}
           </div>
         </div>
       </TokenWrapper>

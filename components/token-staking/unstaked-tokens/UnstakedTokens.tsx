@@ -13,8 +13,15 @@ import { useStakePoolMetadata } from 'hooks/useStakePoolMetadata'
 import { useTokenAccounts } from 'hooks/useTokenAccounts'
 import { useEffect, useState } from 'react'
 import { FaInfoCircle } from 'react-icons/fa'
-
+import {Selector} from '../../../common/Selector'
 import { UnstakedTokenList } from '@/components/token-staking/unstaked-tokens/UnstakedTokenList'
+
+
+const lockOptions = [
+  {label:"none", value: 0},
+  {label:"6 months", value: 6},
+  {label:"10 months", value: 10},
+]
 
 export const UnstakedTokens = () => {
   const { data: stakePoolData } = useStakePoolData()
@@ -23,6 +30,7 @@ export const UnstakedTokens = () => {
   const [unstakedSelected, setUnstakedSelected] = useState<AllowedTokenData[]>(
     []
   )
+  const [lockSelection, setLockSelection] = useState<number>(0)
   const [receiptType, setReceiptType] = useState<ReceiptType>(
     ReceiptType.Original
   )
@@ -70,7 +78,7 @@ export const UnstakedTokens = () => {
             )}
             handleClick={() => tokenAccounts.refetch()}
           />
-          {stakePoolData?.parsed &&
+          {/* stakePoolData?.parsed &&
             !stakePoolMetadata?.tokenStandard &&
             !isStakePoolV2(stakePoolData?.parsed) && (
               <button
@@ -81,7 +89,7 @@ export const UnstakedTokens = () => {
               >
                 {showFungibleTokens ? 'Show NFTs' : 'Show FTs'}
               </button>
-            )}
+              )*/}
         </div>
       </div>
       <div className="my-3 flex-auto overflow-auto">
@@ -95,7 +103,7 @@ export const UnstakedTokens = () => {
       </div>
 
       <div className="mt-2 flex flex-col items-center justify-between gap-5 md:flex-row">
-        {!stakePoolMetadata?.receiptType &&
+        {/*!stakePoolMetadata?.receiptType &&
         stakePoolData?.parsed &&
         !isStakePoolV2(stakePoolData?.parsed) ? (
           <Tooltip
@@ -139,7 +147,7 @@ export const UnstakedTokens = () => {
           </Tooltip>
         ) : (
           <></>
-        )}
+        )*/}
         <div className="flex gap-5">
           <Tooltip title="Click on tokens to select them">
             <button
@@ -153,6 +161,7 @@ export const UnstakedTokens = () => {
                   handleStake.mutate({
                     tokenDatas: unstakedSelected,
                     receiptType,
+                    duration: lockSelection,
                   })
                 }
               }}
@@ -203,8 +212,19 @@ export const UnstakedTokens = () => {
               </span>
             </button>
           </Tooltip>
+       
         </div>
+        
       </div>
+      <div style={{marginTop:"10px"}}>
+      <Tooltip title="Select Lockup Period">
+            <Selector placeholder='Lock Up' options={lockOptions} onChange={(option)=>{
+              console.log(option!.value)
+              setLockSelection(option!.value)
+
+            }}/>
+          </Tooltip>
+          </div>
     </div>
   )
 }
