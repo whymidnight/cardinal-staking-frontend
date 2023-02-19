@@ -25,17 +25,17 @@ const paneTabs: {
   disabled?: boolean
   tooltip?: string
 }[] = [
-  {
-    label: 'Dashboard',
-    value: 'dashboard',
-    tooltip: 'View your personal dashboard',
-  },
-  {
-    label: 'Leaderboard',
-    value: 'leaderboard',
-    tooltip: 'View top users in this pool',
-  },
-]
+    {
+      label: 'Dashboard',
+      value: 'dashboard',
+      tooltip: 'View your personal dashboard',
+    },
+    {
+      label: 'Leaderboard',
+      value: 'leaderboard',
+      tooltip: 'View top users in this pool',
+    },
+  ]
 
 export default function StakePage(props: {
   stakePoolMetadataName: string | null
@@ -44,15 +44,12 @@ export default function StakePage(props: {
   const { isFetched: stakePoolLoaded } = useStakePoolData()
   const userRegion = useUserRegion()
   const rewardDistributorData = useRewardDistributorData()
-  console.log(rewardDistributorData)
   const stakedTokenDatas = useStakedTokenDatas()
 
-  console.log(stakedTokenDatas)
   const [pane, setPane] = useState<PANE_OPTIONS>('dashboard')
   const stakePoolDisplayName = props.stakePoolMetadataName
     ? props.stakePoolMetadataName.replace(' Staking', '') + ' Staking'
     : 'Cardinal NFT Staking'
-  console.log('stakePoolDisplayName', stakePoolDisplayName)
 
   const { data: stakePoolMetadata } = useStakePoolMetadata()
 

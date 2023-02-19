@@ -15,13 +15,13 @@ import { useStakedTokenDatas } from 'hooks/useStakedTokenDatas'
 import { useStakePoolMetadata } from 'hooks/useStakePoolMetadata'
 import { useEnvironmentCtx } from 'providers/EnvironmentProvider'
 export type StatProps = {
-    className?: React.HTMLAttributes<HTMLDivElement>,
-    token: string
+  className?: React.HTMLAttributes<HTMLDivElement>
+  token: string
 }
-export const PerformanceStats: React.FC<
-  StatProps
-> = ({ className, token }: StatProps) => {
-  console.log(token)
+export const PerformanceStats: React.FC<StatProps> = ({
+  className,
+  token,
+}: StatProps) => {
   const { environment } = useEnvironmentCtx()
   const rewardDistributorData = useRewardDistributorData()
   const rewardMintInfo = useRewardMintInfo()
@@ -30,14 +30,12 @@ export const PerformanceStats: React.FC<
   const stakedTokenDatas = useStakedTokenDatas()
   const rewards = useRewards()
   const handleClaimRewards = useHandleClaimRewards()
-  
 
   if (!rewardDistributorData.data) return <></>
   return (
     <div
-      className={`flex flex-col flex-wrap justify-between gap-5 md:flex-row ${
-        stakePoolMetadata?.colors?.fontColor ? '' : 'text-gray-200'
-      } ${className}`}
+      className={`flex flex-col flex-wrap justify-between gap-5 md:flex-row ${stakePoolMetadata?.colors?.fontColor ? '' : 'text-gray-200'
+        } ${className}`}
     >
       <div className="flex flex-row items-center justify-center gap-2">
         <p className="text-lg text-medium-4">Last claim:</p>

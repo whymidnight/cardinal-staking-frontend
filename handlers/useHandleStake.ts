@@ -51,14 +51,14 @@ const stakeInfoFromTokenData = (tokenData: AllowedTokenData) => {
   const mintId = new PublicKey(tokenData.tokenAccount?.parsed.mint)
   const amount = tokenData?.amountToStake
     ? new BN(
-        tokenData?.amountToStake &&
+      tokenData?.amountToStake &&
         tokenData.tokenAccount.parsed.tokenAmount.amount > 1
-          ? parseMintNaturalAmountFromDecimal(
-              tokenData?.amountToStake,
-              tokenData.tokenAccount.parsed.tokenAmount.decimals
-            ).toString()
-          : 1
-      )
+        ? parseMintNaturalAmountFromDecimal(
+          tokenData?.amountToStake,
+          tokenData.tokenAccount.parsed.tokenAmount.decimals
+        ).toString()
+        : 1
+    )
     : undefined
   return {
     tokenAccountId: tokenData.tokenAccount.pubkey,

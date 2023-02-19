@@ -29,18 +29,16 @@ export const useStakePoolData = () => {
   //console.log(STAKE_POOL_ADDRESS.toString());
   //const stakePoolIdPubKey = new PublicKey(stakePoolId!);
   const { data: stakePoolId } = useStakePoolId()
-    const { connection } = useEnvironmentCtx()
+  const { connection } = useEnvironmentCtx()
 
   return useQuery<
     Pick<IdlAccountData<'stakePool'>, 'pubkey' | 'parsed'> | undefined
   >(
     ['stakePoolData', stakePoolId?.toString()],
     async () => {
-    if (!stakePoolId) return
-          const stakePoolAccountInfo = await connection.getAccountInfo(stakePoolId)
-          console.log(stakePoolAccountInfo)
-          const what = getStakePool(connection, stakePoolId)
-          console.log(what);
+      if (!stakePoolId) return
+      const stakePoolAccountInfo = await connection.getAccountInfo(stakePoolId)
+      const what = getStakePool(connection, stakePoolId)
       if (
         stakePoolAccountInfo?.owner.toString() === STAKE_POOL_ADDRESS.toString()
       ) {
