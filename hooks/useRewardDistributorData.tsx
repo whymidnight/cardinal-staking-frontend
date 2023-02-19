@@ -28,55 +28,116 @@ import { useRouter } from 'next/router'
 
 export const useRewardDistributorsData = () => {
   const router = useRouter()
-  const faction = localStorage.getItem("place")
-  const stakePool = router.route
-  if (faction !== null){
+  const stakePool = router.query['stakePoolId']
 
-  const rewardDistributors = GLOBAL_CONFIG.map((factionPool)=>{
-    if (faction === factionPool.faction){
-
-      return [
-        new PublicKey(factionPool.rewardDistributors['0']![0]!.rewardDistributorPda),
-        new PublicKey(factionPool.rewardDistributors['6']![0]!.rewardDistributorPda),
-        new PublicKey(factionPool.rewardDistributors['10']![0]!.rewardDistributorPda),
-      ] 
-    }
-    return [new PublicKey(factionPool.faction)]
-  })
+  const rewardDistributorList = {
+    noLock: GLOBAL_CONFIG[String(stakePool!)]!.rewardDistributors['0']!.map(
+      (item) => {
+        return {
+          token: item.label,
+          address: new PublicKey(item.rewardDistributorPda),
+        }
+      }
+    ),
+    sixMonth: GLOBAL_CONFIG[String(stakePool!)]!.rewardDistributors['6']!.map(
+      (item) => {
+        return {
+          token: item.label,
+          address: new PublicKey(item.rewardDistributorPda),
+        }
+      }
+    ),
+    tenMonth: GLOBAL_CONFIG[String(stakePool!)]!.rewardDistributors['10']!.map(
+      (item) => {
+        return {
+          token: item.label,
+          address: new PublicKey(item.rewardDistributorPda),
+        }
+      }
+    ),
+  }
 
   const { connection } = useEnvironmentCtx()
   const { data: stakePoolData } = useStakePoolData()
   return useQuery<
-    Pick<IdlAccountData<'rewardDistributor'>, 'pubkey' | 'parsed'>[] | undefined
+    Pick<IdlAccountData<'rewardDistributor'>, 'parsed' | 'pubkey'>[] | undefined
   >(
     [
       REWARD_QUERY_KEY,
-      'useRewardDistributorData',
+      'useRewardDistributorsData',
       stakePoolData?.pubkey?.toString(),
     ],
     async () => {
       if (!stakePoolData?.pubkey || !stakePoolData?.parsed) return
-      const rewardDistributorsData = await Promise.all(
-        rewardDistributors!.map(async (_rewardDistributorId) => {
-          return await getRewardDistributor(connection, _rewardDistributorId)
+      const noLockData = await Promise.all(
+        rewardDistributorList.noLock.map(async (item) => {
+          return {
+            token: item.token,
+            data: await getRewardDistributor(connection, item.address),
+          }
+        })
+      )
+      /*const sixMonthData = await Promise.all(
+        rewardDistributorList.sixMonth.map(async (item) => {
+          return {
+            token: item.token,
+            data: await getRewardDistributor(connection, item.address),
+          }
+        })
+        
+      )
+      
+      const tenMonthData = await Promise.all(
+        rewardDistributorList.tenMonth.map(async (item) => {
+          return {
+            token: item.token,
+            data: await getRewardDistributor(connection, item.address),
+          }
         })
       )
 
-      return rewardDistributorsData.map((rewardDistributorData) => ({
-        pubkey: rewardDistributorData.pubkey,
-        parsed: rewardDistributorDataToV2(rewardDistributorData.parsed),
-      }))
+      */
+
+      //console.log(noLockData.map((item)=>item))
+      //console.log('AHHHHHHHHHHHHHHHHHHHHHH')
+
+      return {
+        parsed: {
+          noLock: noLockData.map((item) => {
+            return {
+              distributor: rewardDistributorDataToV2(item.data.parsed),
+              token: item.token,
+            }
+          }),
+         /* sixMonth: sixMonthData.map((item) => {
+            return {
+              distributor: rewardDistributorDataToV2(item.data.parsed),
+              token: item.token,
+            }
+          }),
+          
+          tenMonth: tenMonthData.map((item) => {
+            return {
+              distributor: rewardDistributorDataToV2(item.data.parsed),
+              token: item.token,
+            }
+          }),
+          */
+        },
+      }
     },
     {
       enabled: !!stakePoolData?.pubkey,
       retry: false,
     }
   )
-  }
 }
 
 export const useRewardDistributorData = () => {
+  const { connection } = useEnvironmentCtx()
+  const key = new PublicKey("EHmJVFDdWdG9qpjwEX9FZJwf7Pkxu6ZrLqdUUMhyx7vK")
   const { data: stakePoolData } = useStakePoolData()
+
   return useQuery<
     Pick<IdlAccountData<'rewardDistributor'>, 'pubkey' | 'parsed'> | undefined
   >(
@@ -86,7 +147,14 @@ export const useRewardDistributorData = () => {
       stakePoolData?.pubkey?.toString(),
     ],
     async () => {
-      return undefined
+      const rewardDistributorData = await getRewardDistributor(
+        connection,
+        key
+      )
+      return {
+        pubkey: key,
+        parsed: rewardDistributorDataToV2(rewardDistributorData.parsed),
+          }
     },
     {
       enabled: !!stakePoolData?.pubkey,
@@ -99,9 +167,9 @@ export const isRewardDistributorV2 = (
   rewardDistributorData: (
     | RewardDistributorData
     | TypeDef<
-      AllAccountsMap<CardinalRewardsCenter>['rewardDistributor'],
-      IdlTypes<CardinalRewardsCenter>
-    >
+        AllAccountsMap<CardinalRewardsCenter>['rewardDistributor'],
+        IdlTypes<CardinalRewardsCenter>
+      >
   ) & { type?: 'v1' | 'v2' }
 ): boolean =>
   !('maxSupply' in rewardDistributorData || rewardDistributorData.type === 'v1')
@@ -110,9 +178,9 @@ export const rewardDistributorDataToV2 = (
   rewardDistributorData:
     | RewardDistributorData
     | TypeDef<
-      AllAccountsMap<CardinalRewardsCenter>['rewardDistributor'],
-      IdlTypes<CardinalRewardsCenter>
-    >
+        AllAccountsMap<CardinalRewardsCenter>['rewardDistributor'],
+        IdlTypes<CardinalRewardsCenter>
+      >
 ): TypeDef<
   AllAccountsMap<CardinalRewardsCenter>['rewardDistributor'],
   IdlTypes<CardinalRewardsCenter>

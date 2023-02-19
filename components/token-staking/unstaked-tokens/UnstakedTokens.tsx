@@ -15,8 +15,8 @@ import { useEffect, useState } from 'react'
 import { FaInfoCircle } from 'react-icons/fa'
 import {Selector} from '../../../common/Selector'
 import { UnstakedTokenList } from '@/components/token-staking/unstaked-tokens/UnstakedTokenList'
-
-
+import { GLOBAL_CONFIG } from 'common/uiConfig'
+import { useRewardDistributorsData } from 'hooks/useRewardDistributorData'
 const lockOptions = [
   {label:"none", value: 0},
   {label:"6 months", value: 6},
@@ -26,6 +26,9 @@ const lockOptions = [
 export const UnstakedTokens = () => {
   const { data: stakePoolData } = useStakePoolData()
   const { data: stakePoolMetadata } = useStakePoolMetadata()
+  const {data: distributors} = useRewardDistributorsData()
+  console.log(distributors?.parsed.noLock);
+  
 
   const [unstakedSelected, setUnstakedSelected] = useState<AllowedTokenData[]>(
     []
