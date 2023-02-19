@@ -10,13 +10,13 @@ import { GLOBAL_CONFIG } from 'common/uiConfig'
 import { asWallet } from 'common/Wallets'
 import type { StakeEntryTokenData } from 'hooks/useStakedTokenDatas'
 import { useMutation, useQueryClient } from 'react-query'
-
+import { useEffect } from 'react'
 import { TOKEN_DATAS_KEY } from '../hooks/useAllowedTokenDatas'
 import { useRewardDistributorData } from '../hooks/useRewardDistributorData'
 import { isStakePoolV2, useStakePoolData } from '../hooks/useStakePoolData'
 import { useStakePoolId } from '../hooks/useStakePoolId'
 import { useEnvironmentCtx } from '../providers/EnvironmentProvider'
-
+import { PublicKey } from '@saberhq/solana-contrib'
 export const useHandleUnstake = (callback?: () => void) => {
   const wallet = asWallet(useWallet())
   const { connection } = useEnvironmentCtx()
@@ -24,7 +24,9 @@ export const useHandleUnstake = (callback?: () => void) => {
   const { data: stakePool } = useStakePoolData()
   const rewardDistributorData = useRewardDistributorData()
   const stakePoolId = useStakePoolId()
-
+  useEffect(()=>{
+    console.log('-----------------------------------------------------' + JSON.stringify(rewardDistributorData) )
+  },[rewardDistributorData])
   return useMutation(
     async ({
       tokenDatas,
@@ -92,16 +94,17 @@ export const useHandleUnstake = (callback?: () => void) => {
                 // TODO need a helper function to unstake and
                 // claim rewards from all reward distributors.
                 // NEED TO BATCH!!!
-                const distributorIds = GLOBAL_CONFIG[
-                  stakePoolId.toString()
-                ]!.rewardDistributors.slice(0, 2).map((_, i) => new BN(i))
+                const distributorIDs = GLOBAL_CONFIG[
+                  'E2oRXP6RAAnL3RUdPEgkjDpkMkHBrVAivt99uhBbfJ73'
+                ]!.rewardDistributors
 
-                console.log(distributorIds)
+                console.log(distributorIDs)
 
                 unstakeTx = await unstake(connection, wallet, {
-                  distributorIds,
-                  stakePoolId: stakePoolId,
+                  distributorIds: distributorIDs['0']!.map((item)=> {return new BN(item.distributorIndex)}),
+                  stakePoolId: new PublicKey('E2oRXP6RAAnL3RUdPEgkjDpkMkHBrVAivt99uhBbfJ73'),
                   originalMintId: token.stakeEntry.parsed?.stakeMint,
+                  stakePoolDuration:60
                 })
               }
               transaction.instructions = [
