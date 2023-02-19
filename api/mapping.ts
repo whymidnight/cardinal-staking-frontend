@@ -3163,7 +3163,6 @@ export const stakePoolMetadatas: StakePoolMetadata[] = [
         value: 'https://magiceden.io/marketplace/hyperion',
       },
     ],
-    
   },
   {
     name: 'Solana Mcs staking',
@@ -3172,9 +3171,9 @@ export const stakePoolMetadatas: StakePoolMetadata[] = [
     stakePoolAddress: new PublicKey(
       'HBsam1w2i35vUVfg7ZdngqFQ8m9vmJEhTmn3VAkgmYhM'
     ),
-    description:
-      'Official staking pool for solana mcs NFT collection',
-    imageUrl: 'https://i.ibb.co/L648WCk/Screenshot-from-2023-01-20-20-35-55.png',
+    description: 'Official staking pool for solana mcs NFT collection',
+    imageUrl:
+      'https://i.ibb.co/L648WCk/Screenshot-from-2023-01-20-20-35-55.png',
     tokenStandard: TokenStandard.NonFungible,
     receiptType: ReceiptType.Original,
     hostname: 'stake.solanamcs.com',
@@ -3184,7 +3183,7 @@ export const stakePoolMetadatas: StakePoolMetadata[] = [
       fontWeight: 666,
       backgroundSize: '36% auto',
     },
-    
+
     websiteUrl: 'https://solanamcs.com/',
     maxStaked: 666,
     logoPadding: false,
@@ -3197,7 +3196,7 @@ export const stakePoolMetadatas: StakePoolMetadata[] = [
     },
     backgroundImage:
       'https://cdn.discordapp.com/attachments/894736995090300979/1066104285970059324/gigigigi.jpg',
-    },
+  },
   {
     name: 'howly',
     displayName: 'Howly Finance',
@@ -3349,23 +3348,22 @@ export const stakePoolMetadatas: StakePoolMetadata[] = [
     name: 'DevilBots',
     displayName: 'DEVIL BOTS STAKING',
     stakePoolAddress: new PublicKey(
-     'Fkk1D46RjHP2jtjcHCYRbGcTweEARewb5XqHBTTvyNdm'
+      'Fkk1D46RjHP2jtjcHCYRbGcTweEARewb5XqHBTTvyNdm'
     ),
     websiteUrl: 'https://twitter.com/DevilBotNFT',
     receiptType: ReceiptType.Original,
     maxStaked: 1666, // update with collection size
-    imageUrl: 'https://creator-hub-prod.s3.us-east-2.amazonaws.com/devil_bots_pfp_1669315048275.gif',
+    imageUrl:
+      'https://creator-hub-prod.s3.us-east-2.amazonaws.com/devil_bots_pfp_1669315048275.gif',
     tokenStandard: TokenStandard.NonFungible,
     hostname: 'https://stake.cardinal.so/DevilBots',
-    description:
-     'Official staking pool for the Devil Bots NFT collection',
+    description: 'Official staking pool for the Devil Bots NFT collection',
     colors: {
-    primary: '#313131',
-    secondary: '#734242',
-    fontColor: '#AA0000',
-    fontColorSecondary: '#950000',
-    fontColorTertiary: '#7F1B1B',
-   },
-},
+      primary: '#313131',
+      secondary: '#734242',
+      fontColor: '#AA0000',
+      fontColorSecondary: '#950000',
+      fontColorTertiary: '#7F1B1B',
+    },
+  },
 ]
-

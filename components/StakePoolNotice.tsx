@@ -10,7 +10,6 @@ export const StakePoolNotice = () => {
   const walletModal = useWalletModal()
   const { data: stakePoolMetadata } = useStakePoolMetadata()
   const { data: stakePool, isFetched: stakePoolLoaded } = useStakePoolData()
-  console.log(stakePool);
 
   return (
     <>

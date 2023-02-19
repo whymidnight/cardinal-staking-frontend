@@ -18,9 +18,11 @@ import { TokenStatCooldownBadge } from '@/components/token-staking/token-stats/U
 import { TokenStatNextRewardBadge } from '@/components/token-staking/token-stats/UI/TokenStatNextRewardBadge'
 
 import { StakedStats } from './StakedStats'
+import { StakeEntryData } from '@cardinal/staking/dist/cjs/programs/stakePool'
 
 export const StakedToken = ({
   tk,
+  stakeEntry,
   selected,
   loadingUnstake,
   loadingClaim,
@@ -28,6 +30,7 @@ export const StakedToken = ({
   handleUnstake,
 }: {
   tk: StakeEntryTokenData
+  stakeEntry: StakeEntryData
   selected: boolean
   loadingUnstake: boolean
   loadingClaim: boolean
@@ -111,7 +114,7 @@ export const StakedToken = ({
           <div className="truncate font-semibold">
             {tk.tokenListData?.symbol}
           </div>
-          <StakedStats tokenData={tk} />
+          <StakedStats tokenData={tk} stakeEntryData={stakeEntry} />
           <div className="flex p-2">
             {/*}
             <button

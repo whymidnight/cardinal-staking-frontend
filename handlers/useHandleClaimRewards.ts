@@ -26,7 +26,7 @@ export const useHandleClaimRewards = () => {
   const queryClient = useQueryClient()
   const { data: stakePool } = useStakePoolData()
   const rewardDistributorData = useRewardDistributorData()
-  
+
   return useMutation(
     async ({
       tokenDatas,
@@ -88,8 +88,8 @@ export const useHandleClaimRewards = () => {
                     stakePoolId: stakePool.pubkey,
                     stakeEntryId: token.stakeEntry.pubkey,
                     skipRewardMintTokenAccount: true,
-                    lastStaker: new PublicKey("asdfasdf"),
-                    stakePoolDuration: 54654854
+                    lastStaker: new PublicKey('asdfasdf'),
+                    stakePoolDuration: 54654854,
                   }),
                 ]
               }

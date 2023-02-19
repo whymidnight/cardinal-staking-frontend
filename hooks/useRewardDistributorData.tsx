@@ -3,13 +3,8 @@ import type {
   CardinalRewardsCenter,
   IdlAccountData,
 } from '@cardinal/rewards-center'
-import {
-  fetchIdlAccount,
-  findRewardDistributorId as findRewardDistributorIdV2,
-} from '@cardinal/rewards-center'
 import type { RewardDistributorData } from '@cardinal/staking/dist/cjs/programs/rewardDistributor'
 import { getRewardDistributor } from '@cardinal/staking/dist/cjs/programs/rewardDistributor/accounts'
-import { findRewardDistributorId } from '@cardinal/staking/dist/cjs/programs/rewardDistributor/pda'
 import { BN } from '@project-serum/anchor'
 import type {
   AllAccountsMap,
@@ -24,107 +19,46 @@ import { useQuery } from 'react-query'
 import { useStakePoolData } from './useStakePoolData'
 
 import { GLOBAL_CONFIG } from '../common/uiConfig'
-import { useRouter } from 'next/router'
+import { useStakePoolId } from './useStakePoolId'
 
-export const useRewardDistributorsData = () => {
-  const router = useRouter()
-  const stakePool = router.query['stakePoolId']
-
-  const rewardDistributorList = {
-    noLock: GLOBAL_CONFIG[String(stakePool!)]!.rewardDistributors['0']!.map(
-      (item) => {
-        return {
-          token: item.label,
-          address: new PublicKey(item.rewardDistributorPda),
-        }
-      }
-    ),
-    sixMonth: GLOBAL_CONFIG[String(stakePool!)]!.rewardDistributors['6']!.map(
-      (item) => {
-        return {
-          token: item.label,
-          address: new PublicKey(item.rewardDistributorPda),
-        }
-      }
-    ),
-    tenMonth: GLOBAL_CONFIG[String(stakePool!)]!.rewardDistributors['10']!.map(
-      (item) => {
-        return {
-          token: item.label,
-          address: new PublicKey(item.rewardDistributorPda),
-        }
-      }
-    ),
-  }
+export const useRewardDistributorsData = (duration?: string) => {
+  const stakePool = useStakePoolId()
+  const faction = GLOBAL_CONFIG[stakePool.toString()]
+  const durations = !!duration
+    ? [duration]
+    : Object.keys(GLOBAL_CONFIG![stakePool.toString()]!.rewardDistributors)
 
   const { connection } = useEnvironmentCtx()
   const { data: stakePoolData } = useStakePoolData()
   return useQuery<
-    Pick<IdlAccountData<'rewardDistributor'>, 'parsed' | 'pubkey'>[] | undefined
+    Pick<IdlAccountData<'rewardDistributor'>, 'pubkey' | 'parsed'>[] | undefined
   >(
     [
       REWARD_QUERY_KEY,
       'useRewardDistributorsData',
-      stakePoolData?.pubkey?.toString(),
+      faction,
+      durations,
+      stakePool,
     ],
     async () => {
-      if (!stakePoolData?.pubkey || !stakePoolData?.parsed) return
-      const noLockData = await Promise.all(
-        rewardDistributorList.noLock.map(async (item) => {
-          return {
-            token: item.token,
-            data: await getRewardDistributor(connection, item.address),
-          }
-        })
-      )
-      /*const sixMonthData = await Promise.all(
-        rewardDistributorList.sixMonth.map(async (item) => {
-          return {
-            token: item.token,
-            data: await getRewardDistributor(connection, item.address),
-          }
-        })
-        
-      )
-      
-      const tenMonthData = await Promise.all(
-        rewardDistributorList.tenMonth.map(async (item) => {
-          return {
-            token: item.token,
-            data: await getRewardDistributor(connection, item.address),
-          }
-        })
-      )
-
-      */
-
-      //console.log(noLockData.map((item)=>item))
-      //console.log('AHHHHHHHHHHHHHHHHHHHHHH')
-
-      return {
-        parsed: {
-          noLock: noLockData.map((item) => {
-            return {
-              distributor: rewardDistributorDataToV2(item.data.parsed),
-              token: item.token,
-            }
-          }),
-         /* sixMonth: sixMonthData.map((item) => {
-            return {
-              distributor: rewardDistributorDataToV2(item.data.parsed),
-              token: item.token,
-            }
-          }),
-          
-          tenMonth: tenMonthData.map((item) => {
-            return {
-              distributor: rewardDistributorDataToV2(item.data.parsed),
-              token: item.token,
-            }
-          }),
-          */
-        },
+      let _rewardDistributorsData = []
+      for (const _duration of durations) {
+        for (const _reward_distributor of faction?.rewardDistributors![
+          _duration
+        ]!) {
+          _rewardDistributorsData.push(
+            await getRewardDistributor(
+              connection,
+              new PublicKey(_reward_distributor.rewardDistributorPda)
+            )
+          )
+        }
       }
+
+      return _rewardDistributorsData.map((_rewardDistributorData) => ({
+        pubkey: _rewardDistributorData.pubkey,
+        parsed: rewardDistributorDataToV2(_rewardDistributorData.parsed),
+      }))
     },
     {
       enabled: !!stakePoolData?.pubkey,
@@ -135,7 +69,7 @@ export const useRewardDistributorsData = () => {
 
 export const useRewardDistributorData = () => {
   const { connection } = useEnvironmentCtx()
-  const key = new PublicKey("EHmJVFDdWdG9qpjwEX9FZJwf7Pkxu6ZrLqdUUMhyx7vK")
+  const key = new PublicKey('EHmJVFDdWdG9qpjwEX9FZJwf7Pkxu6ZrLqdUUMhyx7vK')
   const { data: stakePoolData } = useStakePoolData()
 
   return useQuery<
@@ -147,14 +81,11 @@ export const useRewardDistributorData = () => {
       stakePoolData?.pubkey?.toString(),
     ],
     async () => {
-      const rewardDistributorData = await getRewardDistributor(
-        connection,
-        key
-      )
+      const rewardDistributorData = await getRewardDistributor(connection, key)
       return {
         pubkey: key,
         parsed: rewardDistributorDataToV2(rewardDistributorData.parsed),
-          }
+      }
     },
     {
       enabled: !!stakePoolData?.pubkey,
@@ -234,6 +165,8 @@ export const rewardDistributorDataToV1 = (
         multiplierDecimals: rewardDistributorData.parsed.multiplierDecimals,
         maxRewardSecondsReceived:
           rewardDistributorData.parsed.maxRewardSecondsReceived,
+        // NOTE NOT SURE IF IMPACTFUL BUT IS BREAKING WITHOUT
+        stakePoolDuration: 0,
       },
     }
   }

@@ -3,7 +3,7 @@ import { stakePoolMetadatas } from 'api/mapping'
 import { Header } from 'common/Header'
 import { PerformanceStats } from 'components/PerformanceStats'
 import { StakePoolNotice } from 'components/StakePoolNotice'
-import { useRewardDistributorData } from 'hooks/useRewardDistributorData'
+import { useRewardDistributorsData } from 'hooks/useRewardDistributorData'
 import { useStakedTokenDatas } from 'hooks/useStakedTokenDatas'
 import { useStakePoolData } from 'hooks/useStakePoolData'
 import { useStakePoolMetadata } from 'hooks/useStakePoolMetadata'
@@ -25,17 +25,17 @@ const paneTabs: {
   disabled?: boolean
   tooltip?: string
 }[] = [
-    {
-      label: 'Dashboard',
-      value: 'dashboard',
-      tooltip: 'View your personal dashboard',
-    },
-    {
-      label: 'Leaderboard',
-      value: 'leaderboard',
-      tooltip: 'View top users in this pool',
-    },
-  ]
+  {
+    label: 'Dashboard',
+    value: 'dashboard',
+    tooltip: 'View your personal dashboard',
+  },
+  {
+    label: 'Leaderboard',
+    value: 'leaderboard',
+    tooltip: 'View top users in this pool',
+  },
+]
 
 export default function StakePage(props: {
   stakePoolMetadataName: string | null
@@ -43,7 +43,7 @@ export default function StakePage(props: {
   const router = useRouter()
   const { isFetched: stakePoolLoaded } = useStakePoolData()
   const userRegion = useUserRegion()
-  const rewardDistributorData = useRewardDistributorData()
+  const rewardDistributorsData = useRewardDistributorsData()
   const stakedTokenDatas = useStakedTokenDatas()
 
   const [pane, setPane] = useState<PANE_OPTIONS>('dashboard')
@@ -68,6 +68,10 @@ export default function StakePage(props: {
   useEffect(() => {
     getPlace()
   }, [])
+
+  useEffect(() => {
+    console.log('index', rewardDistributorsData)
+  }, [rewardDistributorsData])
 
   return (
     <>
@@ -114,7 +118,7 @@ export default function StakePage(props: {
             }}
           >
             <div className="flex flex-col gap-4">
-              {!!rewardDistributorData.data &&
+              {!!rewardDistributorsData.data &&
                 !!stakedTokenDatas.data?.length && (
                   <div className="flex grow items-center justify-end">
                     <PerformanceStats token={'token1'} />

@@ -1,3 +1,4 @@
+import { initializeRewardEntry } from '@cardinal/staking'
 import { ReceiptType } from '@cardinal/staking/dist/cjs/programs/stakePool'
 import { getStakeEntries } from '@cardinal/staking/dist/cjs/programs/stakePool/accounts'
 import { findStakeEntryId } from '@cardinal/staking/dist/cjs/programs/stakePool/pda'
@@ -13,6 +14,7 @@ import type { Signer } from '@solana/web3.js'
 import { Keypair, PublicKey, Transaction } from '@solana/web3.js'
 import { executeAllTransactions } from 'api/utils'
 import { notify } from 'common/Notification'
+import { GLOBAL_CONFIG } from 'common/uiConfig'
 import { parseMintNaturalAmountFromDecimal } from 'common/units'
 import { asWallet } from 'common/Wallets'
 import { isStakePoolV2, useStakePoolData } from 'hooks/useStakePoolData'
@@ -51,14 +53,14 @@ const stakeInfoFromTokenData = (tokenData: AllowedTokenData) => {
   const mintId = new PublicKey(tokenData.tokenAccount?.parsed.mint)
   const amount = tokenData?.amountToStake
     ? new BN(
-      tokenData?.amountToStake &&
+        tokenData?.amountToStake &&
         tokenData.tokenAccount.parsed.tokenAmount.amount > 1
-        ? parseMintNaturalAmountFromDecimal(
-          tokenData?.amountToStake,
-          tokenData.tokenAccount.parsed.tokenAmount.decimals
-        ).toString()
-        : 1
-    )
+          ? parseMintNaturalAmountFromDecimal(
+              tokenData?.amountToStake,
+              tokenData.tokenAccount.parsed.tokenAmount.decimals
+            ).toString()
+          : 1
+      )
     : undefined
   return {
     tokenAccountId: tokenData.tokenAccount.pubkey,
@@ -90,12 +92,15 @@ export const useHandleStake = (callback?: () => void) => {
       if (!stakePoolData?.parsed) throw 'Stake pool data not found'
       if (tokenDatas.length <= 0) throw 'No tokens selected'
 
+      const rewardDistributors =
+        GLOBAL_CONFIG[stakePoolId.toString()]?.rewardDistributors[duration]
+
       let txs: Transaction[] = []
       if (!isStakePoolV2(stakePoolData.parsed)) {
         const stakeInfos = stakeInfosFromTokenData(tokenDatas)
         const stakeEntryIds = await Promise.all(
           stakeInfos.map(async ({ mintId }) =>
-            findStakeEntryId(stakePoolId.data!, mintId)
+            findStakeEntryId(stakePoolId, mintId)
           )
         )
         let stakeEntries = await getStakeEntries(connection, stakeEntryIds)
@@ -109,13 +114,13 @@ export const useHandleStake = (callback?: () => void) => {
             )
             if (!stakeEntry) {
               await withInitStakeEntry(transaction, connection, wallet, {
-                stakePoolId: stakePoolId.data!,
+                stakePoolId: stakePoolId!,
                 originalMintId: mintId,
               })
             }
 
             await withStake(transaction, connection, wallet, {
-              stakePoolId: stakePoolId.data!,
+              stakePoolId: stakePoolId,
               originalMintId: mintId,
               userOriginalMintTokenAccountId: tokenAccountId,
               amount: amount,
@@ -130,13 +135,33 @@ export const useHandleStake = (callback?: () => void) => {
               if (!receiptMintId) {
                 throw 'Stake entry has no stake mint. Initialize stake mint first.'
               }
+
+              for (const rewardDistributor of rewardDistributors!) {
+                const rewardEntryTx = await initializeRewardEntry(
+                  connection,
+                  wallet,
+                  {
+                    distributorId: new BN(rewardDistributor.distributorIndex),
+                    stakePoolId,
+                    originalMintId: mintId,
+                    duration,
+                  }
+                )
+                transaction.instructions = [
+                  ...transaction.instructions,
+                  ...rewardEntryTx.instructions,
+                ]
+              }
+
+              /* TOOD AND REVIEW WHY IS THIS
               await withClaimReceiptMint(transaction, connection, wallet, {
-                stakePoolId: stakePoolId.data!,
+                stakePoolId: stakePoolId,
                 stakeEntryId: stakeEntryIds[i]!,
                 originalMintId: mintId,
                 receiptMintId: receiptMintId,
                 receiptType: receiptType,
               })
+              */
             }
             return transaction
           })

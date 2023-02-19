@@ -1,5 +1,5 @@
 {
-  "E2oRXP6RAAnL3RUdPEgkjDpkMkHBrVAivt99uhBbfJ73": {
+  "H8W2XoEJoegR3iTrq3kRxHD8MHW3Kg3FAcUZL9E6sTfe": {
     "faction": "North",
     "rewardDistributors": {
       "0": [
@@ -7,52 +7,52 @@
           "label": "YRD-XP",
           "duration": 0,
           "rewardMint": "55thbqpqCPLZUTKL24sJdpji2XJUhA46GtgaCCmKf616",
-          "rewardDistributorPda": "EHmJVFDdWdG9qpjwEX9FZJwf7Pkxu6ZrLqdUUMhyx7vK",
+          "rewardDistributorPda": "cbYMkuZqBBLxJJf6afieZzGABVoJDAJVD3k9Ef3PVbv",
           "distributorIndex": 0
         },
         {
           "label": "CATSINDEX",
           "duration": 0,
           "rewardMint": "CGzMt7K1KYfVqNG2PHvqq7QXLckSHHKri8x5u2h64uLz",
-          "rewardDistributorPda": "FnXEe3vL4UyZjcfMf6fxnysz63Q6girFkxhPidS9X2XG",
+          "rewardDistributorPda": "3Nev1QWmdvvLzSj4Z4hC9JNtjTghYVqCcMSmrnrmFX18",
           "distributorIndex": 1
         }
       ],
-      "6": [
+      "60": [
         {
           "label": "YRD-XP",
           "duration": 60,
           "rewardMint": "55thbqpqCPLZUTKL24sJdpji2XJUhA46GtgaCCmKf616",
-          "rewardDistributorPda": "3ZMRm9EJMNrJXPBydVeYdVwPNKVYQfcAH9U5squz6HLd",
+          "rewardDistributorPda": "cbYMkuZqBBLxJJf6afieZzGABVoJDAJVD3k9Ef3PVbv",
           "distributorIndex": 0
         },
         {
           "label": "CATSINDEX",
           "duration": 60,
           "rewardMint": "CGzMt7K1KYfVqNG2PHvqq7QXLckSHHKri8x5u2h64uLz",
-          "rewardDistributorPda": "F8CUNnucotAJtH2jSSnePxSSidiMM8gu9uizU1i72Hqr",
+          "rewardDistributorPda": "3Nev1QWmdvvLzSj4Z4hC9JNtjTghYVqCcMSmrnrmFX18",
           "distributorIndex": 1
         }
       ],
-      "10": [
+      "120": [
         {
           "label": "YRD-XP",
           "duration": 120,
           "rewardMint": "55thbqpqCPLZUTKL24sJdpji2XJUhA46GtgaCCmKf616",
-          "rewardDistributorPda": "v1LqSYU63JnpT8GCsDdKbp7hTEZEyvTYeit1v44PUhu",
+          "rewardDistributorPda": "cbYMkuZqBBLxJJf6afieZzGABVoJDAJVD3k9Ef3PVbv",
           "distributorIndex": 0
         },
         {
           "label": "CATSINDEX",
           "duration": 120,
           "rewardMint": "CGzMt7K1KYfVqNG2PHvqq7QXLckSHHKri8x5u2h64uLz",
-          "rewardDistributorPda": "28yjLKfoL4eXcDkdy5zrmZ4XiK2vFXv6vUBEUsmLYJUa",
+          "rewardDistributorPda": "3Nev1QWmdvvLzSj4Z4hC9JNtjTghYVqCcMSmrnrmFX18",
           "distributorIndex": 1
         }
       ]
     }
   },
-  "2F57w7i33JMNH25NE2Wt4RRg4TfAhkc8kfkiawnEZcEs": {
+  "2gZiddbeUzNmFeDKrH31Ac9M7izkMXztaxVbwARCJESz": {
     "faction": "East",
     "rewardDistributors": {
       "0": [
@@ -60,52 +60,52 @@
           "label": "YRD-XP",
           "duration": 0,
           "rewardMint": "55thbqpqCPLZUTKL24sJdpji2XJUhA46GtgaCCmKf616",
-          "rewardDistributorPda": "XTY8nZr4Ry5pQyye452XoLMyFFkycGZjGbPyYSbWocG",
+          "rewardDistributorPda": "7vU76u7CBQytAu3Vk5nahyhNgv4fyfMimAXUnAUs79rb",
           "distributorIndex": 0
         },
         {
           "label": "CATSINDEX",
           "duration": 0,
           "rewardMint": "CGzMt7K1KYfVqNG2PHvqq7QXLckSHHKri8x5u2h64uLz",
-          "rewardDistributorPda": "37JY557WsqSCrUhwbJPH1z6Vtk6FABQK6GZKrtxECzdT",
+          "rewardDistributorPda": "EuE3gSJHAG4nqCxdQB87aUsUf6su6n2ofysDLeqekhrf",
           "distributorIndex": 1
         }
       ],
-      "6": [
+      "60": [
         {
           "label": "YRD-XP",
           "duration": 60,
           "rewardMint": "55thbqpqCPLZUTKL24sJdpji2XJUhA46GtgaCCmKf616",
-          "rewardDistributorPda": "Ba6N4wMAPfy1fwGNqv9oZs7zyRgodn1j2aRCF7ib4WAc",
+          "rewardDistributorPda": "7vU76u7CBQytAu3Vk5nahyhNgv4fyfMimAXUnAUs79rb",
           "distributorIndex": 0
         },
         {
           "label": "CATSINDEX",
           "duration": 60,
           "rewardMint": "CGzMt7K1KYfVqNG2PHvqq7QXLckSHHKri8x5u2h64uLz",
-          "rewardDistributorPda": "CZSd5SBqqWxtP9iF3BxRB91mwtAVMobLxFSCjKXfSMz7",
+          "rewardDistributorPda": "EuE3gSJHAG4nqCxdQB87aUsUf6su6n2ofysDLeqekhrf",
           "distributorIndex": 1
         }
       ],
-      "10": [
+      "120": [
         {
           "label": "YRD-XP",
           "duration": 120,
           "rewardMint": "55thbqpqCPLZUTKL24sJdpji2XJUhA46GtgaCCmKf616",
-          "rewardDistributorPda": "7anQA8jMV8bVUGU8aGTAbdRhSXpwERkmiz7y6kWdTjnT",
+          "rewardDistributorPda": "7vU76u7CBQytAu3Vk5nahyhNgv4fyfMimAXUnAUs79rb",
           "distributorIndex": 0
         },
         {
           "label": "CATSINDEX",
           "duration": 120,
           "rewardMint": "CGzMt7K1KYfVqNG2PHvqq7QXLckSHHKri8x5u2h64uLz",
-          "rewardDistributorPda": "CyA3VtWBsBGGJ4tWZvZAPdCm73Ci1DYbUuRrAPPxLccQ",
+          "rewardDistributorPda": "EuE3gSJHAG4nqCxdQB87aUsUf6su6n2ofysDLeqekhrf",
           "distributorIndex": 1
         }
       ]
     }
   },
-  "FA9xWLYUPS9di4db455XrbRuaGLJg5r4gZtZr7pgTg1T": {
+  "Cqj7jXLiVwMbiiJYGiW81zLgbb4mfasLnr2AjfLkqeyD": {
     "faction": "South",
     "rewardDistributors": {
       "0": [
@@ -113,52 +113,52 @@
           "label": "YRD-XP",
           "duration": 0,
           "rewardMint": "55thbqpqCPLZUTKL24sJdpji2XJUhA46GtgaCCmKf616",
-          "rewardDistributorPda": "78kQ6a2Do7e9ir78397nC9FWXPPxbUaBQXGY15UXYwXT",
+          "rewardDistributorPda": "BsAoDzMMUsC7dd3YbsPeoRaZ2a7sD9bZXFMzn63CS2x9",
           "distributorIndex": 0
         },
         {
           "label": "CATSINDEX",
           "duration": 0,
           "rewardMint": "CGzMt7K1KYfVqNG2PHvqq7QXLckSHHKri8x5u2h64uLz",
-          "rewardDistributorPda": "692Nv2YhBd9b744YB33HXEeedvv8n1o7yQGmHjiWWZgR",
+          "rewardDistributorPda": "54RQWAM2PDMqnKaTGUGUSiWWC1c8yK1tHm6yUoi9rP5J",
           "distributorIndex": 1
         }
       ],
-      "6": [
+      "60": [
         {
           "label": "YRD-XP",
           "duration": 60,
           "rewardMint": "55thbqpqCPLZUTKL24sJdpji2XJUhA46GtgaCCmKf616",
-          "rewardDistributorPda": "3BG5K8eAN3zDcPZ8vLb4bxJ9wGje9yESuE6q1cYM2CBn",
+          "rewardDistributorPda": "BsAoDzMMUsC7dd3YbsPeoRaZ2a7sD9bZXFMzn63CS2x9",
           "distributorIndex": 0
         },
         {
           "label": "CATSINDEX",
           "duration": 60,
           "rewardMint": "CGzMt7K1KYfVqNG2PHvqq7QXLckSHHKri8x5u2h64uLz",
-          "rewardDistributorPda": "EUfxcdMSSmTj8BPVcBoepxSNe7ZJ2HTaeLG3t65sqmiM",
+          "rewardDistributorPda": "54RQWAM2PDMqnKaTGUGUSiWWC1c8yK1tHm6yUoi9rP5J",
           "distributorIndex": 1
         }
       ],
-      "10": [
+      "120": [
         {
           "label": "YRD-XP",
           "duration": 120,
           "rewardMint": "55thbqpqCPLZUTKL24sJdpji2XJUhA46GtgaCCmKf616",
-          "rewardDistributorPda": "FK4zEE61PJAGbqtAiPcKRPsxTBWw9NN7y19fP2JYRnfv",
+          "rewardDistributorPda": "BsAoDzMMUsC7dd3YbsPeoRaZ2a7sD9bZXFMzn63CS2x9",
           "distributorIndex": 0
         },
         {
           "label": "CATSINDEX",
           "duration": 120,
           "rewardMint": "CGzMt7K1KYfVqNG2PHvqq7QXLckSHHKri8x5u2h64uLz",
-          "rewardDistributorPda": "31seAFZGEAn8tJUz1kT73eH5hrDGXzPH5EjKvJhzeDKv",
+          "rewardDistributorPda": "54RQWAM2PDMqnKaTGUGUSiWWC1c8yK1tHm6yUoi9rP5J",
           "distributorIndex": 1
         }
       ]
     }
   },
-  "BmWVwmKyz5gUyYoicRZERSbWdwwTE9xijRo5G8bA9R7P": {
+  "8Gh2SjV7PcdxcHZ4DMuE4Gt9MKi9CGgCotypAFTcXgk6": {
     "faction": "West",
     "rewardDistributors": {
       "0": [
@@ -166,46 +166,46 @@
           "label": "YRD-XP",
           "duration": 0,
           "rewardMint": "55thbqpqCPLZUTKL24sJdpji2XJUhA46GtgaCCmKf616",
-          "rewardDistributorPda": "4xv95z9PTUZfLj3Jp3ULYfUFvNN1fyu8jW1WuUgmax5u",
+          "rewardDistributorPda": "D7WnXpQa28h1jitQ2A3P69sF5CCvbEzuzhyBUWwvtqH7",
           "distributorIndex": 0
         },
         {
           "label": "CATSINDEX",
           "duration": 0,
           "rewardMint": "CGzMt7K1KYfVqNG2PHvqq7QXLckSHHKri8x5u2h64uLz",
-          "rewardDistributorPda": "AYdATnKHwH6YuTeoytaoQz4KvVXz7YM5eF5BDjkrT2JQ",
+          "rewardDistributorPda": "ENWK1qatuunZ4yjGxj3R6ga9HeTECEgyAYDXmSHFxSko",
           "distributorIndex": 1
         }
       ],
-      "6": [
+      "60": [
         {
           "label": "YRD-XP",
           "duration": 60,
           "rewardMint": "55thbqpqCPLZUTKL24sJdpji2XJUhA46GtgaCCmKf616",
-          "rewardDistributorPda": "GR6Y2DbN7381ZxdRYN57GRrqqnYYzCkTdY9eg5FDx4qp",
+          "rewardDistributorPda": "D7WnXpQa28h1jitQ2A3P69sF5CCvbEzuzhyBUWwvtqH7",
           "distributorIndex": 0
         },
         {
           "label": "CATSINDEX",
           "duration": 60,
           "rewardMint": "CGzMt7K1KYfVqNG2PHvqq7QXLckSHHKri8x5u2h64uLz",
-          "rewardDistributorPda": "AMpgbXVJWmGw4tmmMHGgsu7CPLEZ3hyCAWNf7Q7yBd4Q",
+          "rewardDistributorPda": "ENWK1qatuunZ4yjGxj3R6ga9HeTECEgyAYDXmSHFxSko",
           "distributorIndex": 1
         }
       ],
-      "10": [
+      "120": [
         {
           "label": "YRD-XP",
           "duration": 120,
           "rewardMint": "55thbqpqCPLZUTKL24sJdpji2XJUhA46GtgaCCmKf616",
-          "rewardDistributorPda": "584DVpgKeYj6383BeKLrXVDgasotHVkLv2Eu4XAazKsR",
+          "rewardDistributorPda": "D7WnXpQa28h1jitQ2A3P69sF5CCvbEzuzhyBUWwvtqH7",
           "distributorIndex": 0
         },
         {
           "label": "CATSINDEX",
           "duration": 120,
           "rewardMint": "CGzMt7K1KYfVqNG2PHvqq7QXLckSHHKri8x5u2h64uLz",
-          "rewardDistributorPda": "FWdgp8HkK6fa9d2LPubbWKYEW4i6MrKVBArotR8eU6UY",
+          "rewardDistributorPda": "ENWK1qatuunZ4yjGxj3R6ga9HeTECEgyAYDXmSHFxSko",
           "distributorIndex": 1
         }
       ]

@@ -3,7 +3,14 @@ import Box from '@mui/material/Box'
 import { Button, Container, Grid, LinearProgress } from '@mui/material'
 
 import { Header } from 'common/Header'
-import { NORTH, EAST, SOUTH, WEST, FACTIONS, GLOBAL_CONFIG } from 'common/uiConfig'
+import {
+  NORTH,
+  EAST,
+  SOUTH,
+  WEST,
+  FACTIONS,
+  GLOBAL_CONFIG,
+} from 'common/uiConfig'
 import { useRouter } from 'next/router'
 import zIndex from '@mui/material/styles/zIndex'
 
@@ -12,7 +19,7 @@ const NorthButton = () => {
   const gotoStake = (place: string) => {
     localStorage.setItem('place', place)
   }
- 
+
   return (
     <Button
       className="freefont"

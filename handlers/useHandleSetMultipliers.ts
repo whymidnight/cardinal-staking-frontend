@@ -214,6 +214,5 @@ export const useHandleSetMultipliers = () => {
     }
   )
     **/
-   return undefined;
+  return undefined
 }
-

@@ -22,13 +22,9 @@ import { PublicKey } from '@solana/web3.js'
 import { useEnvironmentCtx } from 'providers/EnvironmentProvider'
 import { useQuery } from 'react-query'
 import { useStakePoolId } from 'hooks/useStakePoolId'
-import { getStakePool } from '@cardinal/staking/dist/cjs/programs/stakePool/accounts'
 
 export const useStakePoolData = () => {
-  //const {stakePoolId} = router.query;
-  //console.log(STAKE_POOL_ADDRESS.toString());
-  //const stakePoolIdPubKey = new PublicKey(stakePoolId!);
-  const { data: stakePoolId } = useStakePoolId()
+  const stakePoolId = useStakePoolId()
   const { connection } = useEnvironmentCtx()
 
   return useQuery<
@@ -38,7 +34,6 @@ export const useStakePoolData = () => {
     async () => {
       if (!stakePoolId) return
       const stakePoolAccountInfo = await connection.getAccountInfo(stakePoolId)
-      const what = getStakePool(connection, stakePoolId)
       if (
         stakePoolAccountInfo?.owner.toString() === STAKE_POOL_ADDRESS.toString()
       ) {
@@ -76,9 +71,9 @@ export const isStakePoolV2 = (
   stakePoolData: (
     | StakePoolData
     | TypeDef<
-      AllAccountsMap<CardinalRewardsCenter>['stakePool'],
-      IdlTypes<CardinalRewardsCenter>
-    >
+        AllAccountsMap<CardinalRewardsCenter>['stakePool'],
+        IdlTypes<CardinalRewardsCenter>
+      >
   ) & { type?: string }
 ): boolean =>
   !('requiresCreators' in stakePoolData || stakePoolData.type === 'v1')
@@ -87,9 +82,9 @@ export const stakePoolDataToV2 = (
   stakePoolData:
     | StakePoolData
     | TypeDef<
-      AllAccountsMap<CardinalRewardsCenter>['stakePool'],
-      IdlTypes<CardinalRewardsCenter>
-    >
+        AllAccountsMap<CardinalRewardsCenter>['stakePool'],
+        IdlTypes<CardinalRewardsCenter>
+      >
 ): TypeDef<
   AllAccountsMap<CardinalRewardsCenter>['stakePool'],
   IdlTypes<CardinalRewardsCenter>

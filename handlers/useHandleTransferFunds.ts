@@ -20,7 +20,7 @@ export const useHandleTransferFunds = () => {
   //const stakePool = useStakePoolData()
   //const rewardDistributor = useRewardDistributorData()
   //const rewardMintInfo = useRewardMintInfo()
-/**
+  /**
   return useMutation(
     async ({
       transferAmount,
@@ -82,5 +82,5 @@ export const useHandleTransferFunds = () => {
     }
   )
   **/
- return undefined
+  return undefined
 }

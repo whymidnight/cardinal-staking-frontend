@@ -13,22 +13,20 @@ import { useStakePoolMetadata } from 'hooks/useStakePoolMetadata'
 import { useTokenAccounts } from 'hooks/useTokenAccounts'
 import { useEffect, useState } from 'react'
 import { FaInfoCircle } from 'react-icons/fa'
-import {Selector} from '../../../common/Selector'
+import { Selector } from '../../../common/Selector'
 import { UnstakedTokenList } from '@/components/token-staking/unstaked-tokens/UnstakedTokenList'
 import { GLOBAL_CONFIG } from 'common/uiConfig'
 import { useRewardDistributorsData } from 'hooks/useRewardDistributorData'
 const lockOptions = [
-  {label:"none", value: 0},
-  {label:"6 months", value: 6},
-  {label:"10 months", value: 10},
+  { label: 'none', value: 0 },
+  { label: '6 months', value: 6 },
+  { label: '10 months', value: 10 },
 ]
 
 export const UnstakedTokens = () => {
   const { data: stakePoolData } = useStakePoolData()
   const { data: stakePoolMetadata } = useStakePoolMetadata()
-  const {data: distributors} = useRewardDistributorsData()
-  console.log(distributors?.parsed.noLock);
-  
+  // const { data: distributors } = useRewardDistributorsData()
 
   const [unstakedSelected, setUnstakedSelected] = useState<AllowedTokenData[]>(
     []
@@ -101,6 +99,7 @@ export const UnstakedTokens = () => {
           unstakedSelected={unstakedSelected}
           showFungibleTokens={showFungibleTokens}
           receiptType={receiptType}
+          // @ts-ignore
           handleStake={handleStake}
         />
       </div>
@@ -215,19 +214,20 @@ export const UnstakedTokens = () => {
               </span>
             </button>
           </Tooltip>
-       
         </div>
-        
       </div>
-      <div style={{marginTop:"10px"}}>
-      <Tooltip title="Select Lockup Period">
-            <Selector placeholder='Lock Up' options={lockOptions} onChange={(option)=>{
+      <div style={{ marginTop: '10px' }}>
+        <Tooltip title="Select Lockup Period">
+          <Selector
+            placeholder="Lock Up"
+            options={lockOptions}
+            onChange={(option) => {
               console.log(option!.value)
               setLockSelection(option!.value)
-
-            }}/>
-          </Tooltip>
-          </div>
+            }}
+          />
+        </Tooltip>
+      </div>
     </div>
   )
 }

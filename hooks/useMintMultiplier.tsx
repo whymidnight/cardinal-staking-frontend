@@ -88,4 +88,3 @@ export const useMintMultiplier = (mint: string) => {
   **/
   return undefined
 }
-

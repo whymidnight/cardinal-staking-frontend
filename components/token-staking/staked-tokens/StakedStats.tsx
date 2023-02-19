@@ -4,28 +4,43 @@ import {
   formatMintNaturalAmountAsDecimal,
 } from 'common/units'
 import { useMintInfo } from 'hooks/useMintInfo'
-import { useRewardDistributorData } from 'hooks/useRewardDistributorData'
+import {
+  useRewardDistributorData,
+  useRewardDistributorsData,
+} from 'hooks/useRewardDistributorData'
 import { useRewardMintInfo } from 'hooks/useRewardMintInfo'
 import { useRewards } from 'hooks/useRewards'
-import { useRewardsRate } from 'hooks/useRewardsRate'
+import { useRewardsRate, useRewardsRates } from 'hooks/useRewardsRate'
 import type { StakeEntryTokenData } from 'hooks/useStakedTokenDatas'
 import { useStakePoolData } from 'hooks/useStakePoolData'
 
 import { StakedStatWrapper } from '@/components/token-staking/staked-tokens/StakedStatWrapper'
 import { TokenStatCooldownValue } from '@/components/token-staking/token-stats/values/TokenStatCooldownValue'
 import { TokenStatMinimumStakeTimeValue } from '@/components/token-staking/token-stats/values/TokenStatMinimumStakeTimeValue'
+import { StakeEntryData } from '@cardinal/staking/dist/cjs/programs/stakePool'
+import { useEffect } from 'react'
+import { rewardDistributor } from '@cardinal/staking'
 
-export function StakedStats({ tokenData }: { tokenData: StakeEntryTokenData }) {
+export function StakedStats({
+  tokenData,
+  stakeEntryData,
+}: {
+  tokenData: StakeEntryTokenData
+  stakeEntryData: StakeEntryData
+}) {
+  const { data: rewardDistributorsData } = useRewardDistributorsData(
+    String(stakeEntryData.stakedDuration)
+  )
   const rewardMintInfo = useRewardMintInfo()
   const mintInfo = useMintInfo(
     tokenData.stakeEntry?.parsed?.amount.gt(new BN(1))
       ? tokenData.stakeEntry?.parsed.stakeMint
       : undefined
   )
-  const rewardDistributorData = useRewardDistributorData()
 
   const { data: stakePool } = useStakePoolData()
-  const rewardsRate = useRewardsRate()
+  // const rewardsRate = useRewardsRate()
+  const rewardsRates = useRewardsRates(stakeEntryData)
   const rewards = useRewards()
 
   return (
@@ -46,11 +61,12 @@ export function StakedStats({ tokenData }: { tokenData: StakeEntryTokenData }) {
             </span>
           </StakedStatWrapper>
         )}
-      {rewardDistributorData.data &&
-        rewardDistributorData.data.parsed?.rewardDurationSeconds &&
-        rewardDistributorData.data.parsed?.rewardDurationSeconds.gt(
-          new BN(0)
-        ) && (
+      {/*
+            iterate over rewards rates
+          */}
+      {rewardsRates.data?.length}
+      {rewardsRates.data &&
+        rewardsRates.data.map((rewardRate) => (
           <>
             {tokenData.stakeEntry && rewardMintInfo.data && (
               <StakedStatWrapper>
@@ -58,11 +74,14 @@ export function StakedStats({ tokenData }: { tokenData: StakeEntryTokenData }) {
                 <span className="text-right">
                   {formatAmountAsDecimal(
                     rewardMintInfo.data.mintInfo.decimals,
-                    rewardsRate.data?.rewardsRateMap[
-                      tokenData.stakeEntry.pubkey.toString()
-                    ]?.dailyRewards || new BN(0), // max of 5 decimals
+                    rewardDistributorsData?.filter(
+                      (rewardDistributorData) =>
+                        rewardDistributorData.parsed.rewardMint.toString() ===
+                        rewardMintInfo.data?.mintInfo.address.toString()
+                    )[0]?.parsed.rewardAmount || new BN(0), // max of 5 decimals
                     Math.min(rewardMintInfo.data.mintInfo.decimals, 5)
                   )}{' '}
+                  {/* parse´reward distributor `rewardDurationSeconds` seconds to human readable */}
                   / day
                 </span>
               </StakedStatWrapper>
@@ -83,7 +102,7 @@ export function StakedStats({ tokenData }: { tokenData: StakeEntryTokenData }) {
               </StakedStatWrapper>
             )}
           </>
-        )}
+        ))}
       {!!tokenData.stakeEntry?.parsed?.cooldownStartSeconds &&
         !!stakePool?.parsed?.cooldownSeconds && (
           <StakedStatWrapper>

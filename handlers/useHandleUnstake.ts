@@ -80,8 +80,7 @@ export const useHandleUnstake = (callback?: () => void) => {
               // claim rewards from all reward distributors.
               // NEED TO BATCH!!!
               const distributorIDs =
-                GLOBAL_CONFIG['E2oRXP6RAAnL3RUdPEgkjDpkMkHBrVAivt99uhBbfJ73']!
-                  .rewardDistributors
+                GLOBAL_CONFIG[stakePoolId.toString()]!.rewardDistributors
 
               console.log('distIds', distributorIDs)
               console.log(
@@ -94,9 +93,7 @@ export const useHandleUnstake = (callback?: () => void) => {
                 distributorIds: distributorIDs['0']!.map((item) => {
                   return new BN(item.distributorIndex)
                 }),
-                stakePoolId: new PublicKey(
-                  'E2oRXP6RAAnL3RUdPEgkjDpkMkHBrVAivt99uhBbfJ73'
-                ),
+                stakePoolId,
                 originalMintId: token.stakeEntry.parsed?.stakeMint,
                 stakePoolDuration: 0,
               })
@@ -114,9 +111,7 @@ export const useHandleUnstake = (callback?: () => void) => {
                     wallet,
                     {
                       distributorId: new BN(dist.distributorIndex),
-                      stakePoolId: new PublicKey(
-                        'E2oRXP6RAAnL3RUdPEgkjDpkMkHBrVAivt99uhBbfJ73'
-                      ),
+                      stakePoolId,
                       stakeEntryId: token.stakeEntry?.pubkey!,
                       lastStaker: wallet.publicKey,
                       stakePoolDuration: 0,
@@ -148,8 +143,9 @@ export const useHandleUnstake = (callback?: () => void) => {
             skipPreflight: true,
           },
           notificationConfig: {
-            message: `Successfully ${coolDown ? 'initiated cooldown' : 'unstaked'
-              }`,
+            message: `Successfully ${
+              coolDown ? 'initiated cooldown' : 'unstaked'
+            }`,
             description: 'These tokens are now available in your wallet',
           },
         }

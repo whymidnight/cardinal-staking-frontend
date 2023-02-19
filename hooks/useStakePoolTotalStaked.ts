@@ -24,15 +24,18 @@ export const useStakePoolTotalStaked = () => {
           if (entry.parsed?.amount && entry.parsed?.amount.toNumber() > 1) {
             let decimals = 0
             const match = mintToDecimals.find(
-              (m) => m.mint === entry.parsed?.stakeMint.toString()
+              (m) => m.mint === entry.parsed?.originalMint.toString()
             )
             if (match) {
               decimals = match.decimals
             } else {
-              const mintInfo = await getMint(connection, entry.parsed.stakeMint)
+              const mintInfo = await getMint(
+                connection,
+                entry.parsed.originalMint
+              )
               decimals = mintInfo.decimals
               mintToDecimals.push({
-                mint: entry.parsed.stakeMint.toString(),
+                mint: entry.parsed.originalMint.toString(),
                 decimals: decimals,
               })
             }

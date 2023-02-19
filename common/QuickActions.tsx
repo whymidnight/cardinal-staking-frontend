@@ -123,6 +123,8 @@ export const QuickActions = ({
                   handleStake.mutate({
                     tokenDatas: [unstakedTokenData],
                     receiptType,
+                    // TODO FIXME NOT SURE WHAT TO DO
+                    duration: 0,
                   })
                 }}
               >

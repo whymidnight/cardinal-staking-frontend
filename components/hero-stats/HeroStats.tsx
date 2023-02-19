@@ -19,8 +19,8 @@ export const HeroStats: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
 
   return (
     <div
-      className={`flex w-full flex-col flex-wrap gap-y-5 rounded-xl px-12 py-6 md:flex-row
-       justify-evenly bg-white bg-opacity-5 ${className}`}
+      className={`flex w-full flex-col flex-wrap justify-evenly gap-y-5 rounded-xl bg-white bg-opacity-5
+       px-12 py-6 md:flex-row ${className}`}
       style={{
         background: stakePoolMetadata?.colors?.backgroundSecondary,
         border: stakePoolMetadata?.colors?.accent
@@ -68,7 +68,9 @@ export const HeroStats: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
           <div className="flex flex-1 flex-col items-center justify-center">
             <p className="text-lg text-medium-4">Treasury Balance (YrdXp)</p>
             <TreasuryBalance className="text-center text-xl text-light-1" />
-            <p className="text-lg text-medium-4">Treasury Balance (catsIndex)</p>
+            <p className="text-lg text-medium-4">
+              Treasury Balance (catsIndex)
+            </p>
             <TreasuryBalance className="text-center text-xl text-light-1" />
           </div>
         </>

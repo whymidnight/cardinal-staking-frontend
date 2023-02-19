@@ -11,6 +11,7 @@ import { StakedToken } from '@/components/token-staking/staked-tokens/StakedToke
 import { TokenListEmptyState } from '@/components/token-staking/token-list/TokenListEmptyState'
 import { TokenListLoader } from '@/components/token-staking/token-list/TokenListLoader'
 import { TokenListWrapper } from '@/components/token-staking/token-list/TokenListWrapper'
+import { useStakePoolEntries } from 'hooks/useStakePoolEntries'
 
 export type StakedTokenListProps = {
   stakedSelected: StakeEntryTokenData[]
@@ -29,6 +30,7 @@ export const StakedTokenList = ({
   handleUnstake,
 }: StakedTokenListProps) => {
   const [pageNum, setPageNum] = useState<[number, number]>(DEFAULT_PAGE)
+  const stakePoolEntries = useStakePoolEntries()
   const stakedTokenDatas = useStakedTokenDatas()
   const handleClaimRewards = useHandleClaimRewards()
 
@@ -72,17 +74,20 @@ export const StakedTokenList = ({
           message="No tokens currently staked."
         />
       ) : (
-        <div className="grid grid-cols-1 gap-4 xl:grid-cols-2"
-        style={{height:"400px"}}>
+        <div
+          className="grid grid-cols-1 gap-4 xl:grid-cols-2"
+          style={{ height: '400px' }}
+        >
           {!stakePoolMetadata?.notFound &&
             stakedTokenDatas.data &&
             stakedTokenDatas.data
               .slice(0, PAGE_SIZE * pageNum[0])
-              .map((tk) => (
+              .map((tk, i) => (
                 <StakedToken
                   handleUnstake={handleUnstake}
                   key={tk?.stakeEntry?.pubkey.toBase58()}
                   tk={tk}
+                  stakeEntry={stakePoolEntries.data![i]!.parsed!}
                   select={(tk) => selectStakedToken(tk)}
                   selected={isStakedTokenSelected(tk)}
                   loadingClaim={
