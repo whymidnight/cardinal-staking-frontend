@@ -19,8 +19,8 @@ import { GLOBAL_CONFIG } from 'common/uiConfig'
 import { useRewardDistributorsData } from 'hooks/useRewardDistributorData'
 const lockOptions = [
   { label: 'none', value: 0 },
-  { label: '6 months', value: 6 },
-  { label: '10 months', value: 10 },
+  { label: '60 days', value: 60 },
+  { label: '120 days', value: 120 },
 ]
 
 export const UnstakedTokens = () => {
@@ -31,6 +31,8 @@ export const UnstakedTokens = () => {
   const [unstakedSelected, setUnstakedSelected] = useState<AllowedTokenData[]>(
     []
   )
+  const rewardData = useRewardDistributorsData();
+  console.log(rewardData);
   const [lockSelection, setLockSelection] = useState<number>(0)
   const [receiptType, setReceiptType] = useState<ReceiptType>(
     ReceiptType.Original
@@ -160,6 +162,7 @@ export const UnstakedTokens = () => {
                     type: 'error',
                   })
                 } else {
+                  console.log(unstakedSelected)
                   handleStake.mutate({
                     tokenDatas: unstakedSelected,
                     receiptType,
@@ -199,6 +202,7 @@ export const UnstakedTokens = () => {
                     ? []
                     : allowedTokenDatas.data || []
                 )
+                console.log(unstakedSelected)
               }}
               style={{
                 background:

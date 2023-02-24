@@ -22,7 +22,14 @@ import { PublicKey } from '@solana/web3.js'
 import { useEnvironmentCtx } from 'providers/EnvironmentProvider'
 import { useQuery } from 'react-query'
 import { useStakePoolId } from 'hooks/useStakePoolId'
-
+import {
+  NORTH,
+  EAST,
+  SOUTH,
+  WEST,
+  FACTIONS,
+  GLOBAL_CONFIG,
+} from 'common/uiConfig'
 export const useStakePoolData = () => {
   const stakePoolId = useStakePoolId()
   const { connection } = useEnvironmentCtx()
@@ -63,6 +70,43 @@ export const useStakePoolData = () => {
     },
     {
       enabled: !!stakePoolId,
+    }
+  )
+}
+
+export const useTotalStakedData = () => {
+  const stakePoolIds = FACTIONS
+  console.log(FACTIONS)
+  const { connection } = useEnvironmentCtx()
+
+  return useQuery<
+    Pick<IdlAccountData<'stakePool'>, 'pubkey' | 'parsed'> | undefined
+  >(
+    ['totalStakedData', FACTIONS],
+    async () => {
+      let totalStaked = 0;
+      console.log('start')
+      const stakePoolAccountsInfo = await Promise.all( FACTIONS.map(async (id)=> {return await connection.getAccountInfo(new PublicKey(id))}) )
+      console.log(stakePoolAccountsInfo)
+      const pools = stakePoolAccountsInfo.map((pool, i)=> {
+        if (pool !== null){
+        const stakePoolData: StakePoolData = new BorshAccountsCoder(
+          STAKE_POOL_IDL
+        ).decode('stakePool', pool.data)
+        return {
+          pubkey: FACTIONS[i],
+          parsed: stakePoolDataToV2(stakePoolData),
+        }
+      }
+    }
+    
+      )
+      pools.map((item)=> totalStaked += item!.parsed.totalStaked)
+      return totalStaked
+      
+    },
+    {
+      enabled: true,
     }
   )
 }

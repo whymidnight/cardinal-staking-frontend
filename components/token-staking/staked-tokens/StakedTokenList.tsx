@@ -64,6 +64,7 @@ export const StakedTokenList = ({
       setStakedSelected([...stakedSelected, tk])
     }
   }
+
   return (
     <TokenListWrapper setPageNum={setPageNum}>
       {!stakedTokenDatas.isFetched ? (

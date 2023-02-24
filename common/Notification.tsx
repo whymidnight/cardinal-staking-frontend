@@ -86,7 +86,7 @@ const TxContainer = styled.div`
 `
 
 export function ToastContainer() {
-  const { data: stakePoolMetadata } = useStakePoolMetadata()
+  /*const { data: stakePoolMetadata } = useStakePoolMetadata()
   return (
     <Toaster position="top-right">
       {(t) => (
@@ -114,5 +114,7 @@ export function ToastContainer() {
         </ToastBar>
       )}
     </Toaster>
-  )
+  ) */
+
+  return <></>
 }

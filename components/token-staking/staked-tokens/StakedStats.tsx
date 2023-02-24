@@ -13,12 +13,11 @@ import { useRewards } from 'hooks/useRewards'
 import { useRewardsRate, useRewardsRates } from 'hooks/useRewardsRate'
 import type { StakeEntryTokenData } from 'hooks/useStakedTokenDatas'
 import { useStakePoolData } from 'hooks/useStakePoolData'
-
+import { useState, useEffect } from 'react'
 import { StakedStatWrapper } from '@/components/token-staking/staked-tokens/StakedStatWrapper'
 import { TokenStatCooldownValue } from '@/components/token-staking/token-stats/values/TokenStatCooldownValue'
 import { TokenStatMinimumStakeTimeValue } from '@/components/token-staking/token-stats/values/TokenStatMinimumStakeTimeValue'
 import { StakeEntryData } from '@cardinal/staking/dist/cjs/programs/stakePool'
-import { useEffect } from 'react'
 import { rewardDistributor } from '@cardinal/staking'
 
 export function StakedStats({
@@ -42,6 +41,13 @@ export function StakedStats({
   // const rewardsRate = useRewardsRate()
   const rewardsRates = useRewardsRates(stakeEntryData)
   const rewards = useRewards()
+  const [isLocked, setisLocked] = useState<boolean>(false)
+  useEffect(()=>{
+    if (stakeEntryData.stakedDuration !== 0 || null) {
+      setisLocked(true)
+
+    }
+  },[rewardDistributorsData])
 
   return (
     <div className="flex flex-wrap items-center space-y-0.5 p-2">
@@ -70,6 +76,8 @@ export function StakedStats({
           <>
             {tokenData.stakeEntry && rewardMintInfo.data && (
               <StakedStatWrapper>
+                  {isLocked && <div>LOCKED</div> }
+              
                 <span>Reward rate:</span>
                 <span className="text-right">
                   {formatAmountAsDecimal(

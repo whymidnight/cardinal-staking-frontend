@@ -43,21 +43,24 @@ export const useRewardDistributorsData = (duration?: string) => {
     async () => {
       let _rewardDistributorsData = []
       for (const _duration of durations) {
+        console.log(_duration);
         for (const _reward_distributor of faction?.rewardDistributors![
           _duration
         ]!) {
-          _rewardDistributorsData.push(
-            await getRewardDistributor(
+          _rewardDistributorsData.push({
+            fetched: await getRewardDistributor(
               connection,
               new PublicKey(_reward_distributor.rewardDistributorPda)
-            )
-          )
+            ),
+            duration: _duration,
+            })
         }
       }
 
       return _rewardDistributorsData.map((_rewardDistributorData) => ({
-        pubkey: _rewardDistributorData.pubkey,
-        parsed: rewardDistributorDataToV2(_rewardDistributorData.parsed),
+        pubkey: _rewardDistributorData.fetched.pubkey,
+        parsed: rewardDistributorDataToV2(_rewardDistributorData.fetched.parsed),
+        duration: _rewardDistributorData.duration,
       }))
     },
     {

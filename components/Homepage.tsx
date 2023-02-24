@@ -13,6 +13,7 @@ import {
 } from 'common/uiConfig'
 import { useRouter } from 'next/router'
 import zIndex from '@mui/material/styles/zIndex'
+import { useTotalStakedData } from 'hooks/useStakePoolData'
 
 const NorthButton = () => {
   const router = useRouter()
@@ -123,6 +124,8 @@ const SouthButton = () => {
   )
 }
 export default function Homepage() {
+  const {data: totalCatsStaked} = useTotalStakedData();
+  console.log(totalCatsStaked);
   return (
     <>
       <Container
@@ -322,11 +325,11 @@ export default function Homepage() {
                   boxShadow: '0px 1px 1px 2px rgba(0,30,0,0.1)',
                 }}
               >
-                Cats Staked: 1616/3333
+                Cats Staked: {totalCatsStaked} / 3333
                 <Box sx={{ width: '100%' }}>
                   <LinearProgress
                     variant="determinate"
-                    value={50}
+                    value={(Number(totalCatsStaked) / 3333 * 100)}
                     color="success"
                   />
                 </Box>
