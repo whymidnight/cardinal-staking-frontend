@@ -84,26 +84,27 @@ export const useTotalStakedData = () => {
   >(
     ['totalStakedData', FACTIONS],
     async () => {
-      let totalStaked = 0;
+      let totalStaked = 0
       console.log('start')
-      const stakePoolAccountsInfo = await Promise.all( FACTIONS.map(async (id)=> {return await connection.getAccountInfo(new PublicKey(id))}) )
-      console.log(stakePoolAccountsInfo)
-      const pools = stakePoolAccountsInfo.map((pool, i)=> {
-        if (pool !== null){
-        const stakePoolData: StakePoolData = new BorshAccountsCoder(
-          STAKE_POOL_IDL
-        ).decode('stakePool', pool.data)
-        return {
-          pubkey: FACTIONS[i],
-          parsed: stakePoolDataToV2(stakePoolData),
-        }
-      }
-    }
-    
+      const stakePoolAccountsInfo = await Promise.all(
+        FACTIONS.map(async (id) => {
+          return await connection.getAccountInfo(new PublicKey(id))
+        })
       )
-      pools.map((item)=> totalStaked += item!.parsed.totalStaked)
+      console.log(stakePoolAccountsInfo)
+      const pools = stakePoolAccountsInfo.map((pool, i) => {
+        if (pool !== null) {
+          const stakePoolData: StakePoolData = new BorshAccountsCoder(
+            STAKE_POOL_IDL
+          ).decode('stakePool', pool.data)
+          return {
+            pubkey: FACTIONS[i],
+            parsed: stakePoolDataToV2(stakePoolData),
+          }
+        }
+      })
+      pools.map((item) => (totalStaked += item!.parsed.totalStaked))
       return totalStaked
-      
     },
     {
       enabled: true,

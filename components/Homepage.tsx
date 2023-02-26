@@ -124,8 +124,8 @@ const SouthButton = () => {
   )
 }
 export default function Homepage() {
-  const {data: totalCatsStaked} = useTotalStakedData();
-  console.log(totalCatsStaked);
+  const { data: totalCatsStaked } = useTotalStakedData()
+  console.log(totalCatsStaked)
   return (
     <>
       <Container
@@ -329,7 +329,7 @@ export default function Homepage() {
                 <Box sx={{ width: '100%' }}>
                   <LinearProgress
                     variant="determinate"
-                    value={(Number(totalCatsStaked) / 3333 * 100)}
+                    value={(Number(totalCatsStaked) / 3333) * 100}
                     color="success"
                   />
                 </Box>

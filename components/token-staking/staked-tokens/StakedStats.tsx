@@ -42,12 +42,11 @@ export function StakedStats({
   const rewardsRates = useRewardsRates(stakeEntryData)
   const rewards = useRewards()
   const [isLocked, setisLocked] = useState<boolean>(false)
-  useEffect(()=>{
+  useEffect(() => {
     if (stakeEntryData.stakedDuration !== 0 || null) {
       setisLocked(true)
-
     }
-  },[rewardDistributorsData])
+  }, [rewardDistributorsData])
 
   return (
     <div className="flex flex-wrap items-center space-y-0.5 p-2">
@@ -76,8 +75,8 @@ export function StakedStats({
           <>
             {tokenData.stakeEntry && rewardMintInfo.data && (
               <StakedStatWrapper>
-                  {isLocked && <div>LOCKED</div> }
-              
+                {isLocked && <div>LOCKED</div>}
+
                 <span>Reward rate:</span>
                 <span className="text-right">
                   {formatAmountAsDecimal(

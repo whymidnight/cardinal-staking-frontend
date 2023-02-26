@@ -31,8 +31,8 @@ export const UnstakedTokens = () => {
   const [unstakedSelected, setUnstakedSelected] = useState<AllowedTokenData[]>(
     []
   )
-  const rewardData = useRewardDistributorsData();
-  console.log(rewardData);
+  const rewardData = useRewardDistributorsData()
+  console.log(rewardData)
   const [lockSelection, setLockSelection] = useState<number>(0)
   const [receiptType, setReceiptType] = useState<ReceiptType>(
     ReceiptType.Original
